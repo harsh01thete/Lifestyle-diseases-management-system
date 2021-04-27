@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root {
+  --page-header-bgColor: #242e42;
+  --page-header-bgColor-hover: #1d2636;
+  --page-header-txtColor: #dee4ec;
+  --page-header-headingColor: #e8ecf3;
+  --page-header-width: 220px;
+  --page-content-bgColor: #f0f1f6;
+  --page-content-txtColor: #f3f2f2;
+  --page-content-blockColor: #fff;
+  --white: #fff;
+  --black: #333;
+  --blue: #00b9eb;
+  --red: #ec1848;
+  --border-radius: 4px;
+  --box-shadow: 0 0 10px -2px rgba(0, 0, 0, 0.075);
+  --switch-bgLightModeColor: #87cefa;
+  --switch-sunColor: gold;
+  --switch-moonColor: #f4f4f4;
+  --switch-bgDarkModeColor: #1f1f27;
+}
+
+    body {
+      font: 16px/1.5 "Lato", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    .row {
+      display: -ms-flexbox; /* IE10 */
+      display: flex;
+      -ms-flex-wrap: wrap; /* IE10 */
+      flex-wrap: wrap;
+      margin: 0 -16px;
+    }
+
+    .col-25 {
+      -ms-flex: 25%; /* IE10 */
+      flex: 25%;
+    }
+
+    .col-50 {
+      -ms-flex: 50%; /* IE10 */
+      flex: 50%;
+    }
+
+    .col-75 {
+      -ms-flex: 75%; /* IE10 */
+      flex: 75%;
+    }
+
+    .col-25,
+    .col-50,
+    .col-75 {
+      padding: 0 16px;
+    }
+
+
+    .container {
+      /* background-color: #f2f2f2; */
+      background: var(--page-header-bgColor);
+
+      padding: 5px 200px 10px 200px;
+      border: 1px solid lightgrey;
+      border-radius: 3px;
+    }
+
+    input[type=text] {
+      width: 100%;
+      margin-bottom: 20px;
+      padding: 12px;
+      border: 1px solid rgb(247, 232, 232);
+      border-radius: 3px;
+    }
+
+    input[type=number] {
+      width: 100%;
+      margin-bottom: 20px;
+      padding: 12px;
+      border: 1px solid rgb(247, 232, 232);
+      border-radius: 3px;
+    }
+
+    input[type=tel] {
+      width: 100%;
+      margin-bottom: 20px;
+      padding: 12px;
+      border: 1px solid rgb(247, 232, 232);
+      border-radius: 3px;
+    }
+
+    label {
+	color: #dde9f8;
+	display: block;
+	padding: 10px;
+	margin: 3px;
+}
+
+    h2 {
+      color: #F0F4F7;
+    }
+
+    .icon-container {
+      margin-bottom: 20px;
+      padding: 7px 0;
+      font-size: 24px;
+    }
+
+    .btn {
+      background-color: #4CAF50;
+      color: rgb(253, 238, 238);
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      width: 15%;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 17px;
+    }
+
+    .btn:hover {
+      background-color: #45a049;
+    }
+    .btn1 {
+      background-color: rgb(203, 203, 231);
+      color: rgb(5, 4, 4);
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      width: auto;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 17px;
+    }
+
+    .btn1:hover {
+      background-color: rgb(185, 201, 236);
+    }
+
+    a {
+      color: #2196F3;
+    }
+
+    #dvtext {
+      display: none;
+    }
+    #chkYes:checked ~ #dvtext {
+      display: block;
+    }
+
+    hr {
+      border: 1px solid rgb(240, 230, 230);
+    }
+    ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: rgb(19, 18, 18);
+  opacity: 1; /* Firefox */
+}
+
+
+    span.price {
+      float: right;
+      color: rgb(247, 231, 231);
+    }
+
+    /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (also change the direction - make the "cart" column go on top) */
+    @media (max-width: 800px) {
+      .row {
+        flex-direction: column-reverse;
+      }
+      .col-25 {
+        margin-bottom: 20px;
+      }
+    }
+    </style>
+</head>
+<body style="background-color:rgb(239, 244, 245);"></body>
+<form action="/newProfile" method="POST">
+        <div class="container">
+        <center> <h1 style="color:rgb(241, 241, 246);">Fill new user details</h1></center>
+        <hr>
+            <label><b>Firstname</b></label>
+            <input type="text" name="firstname" placeholder= "Firstname" size="15" required />
+            <label> <b>Lastname</b> </label>
+            <input type="text" name="lastname" placeholder="Lastname" size="15"required />
+            <label><b>Contact No:</b></label>
+            <input type="tel" name="MobileNumber" placeholder="+91" size="10" pattern="[6-9]{1}[0-9]{9}" required/>
+            <label><b>Age:</b> </label>
+            <input type="number" name="age" placeholder="Age" size="100" min="1" max="150" required/>
+
+        <div>
+          <!-- <br></br> -->
+          <!-- <label>  </label> -->
+          <h2>Gender :</h2>
+          <label>
+          <input type="radio" value="Male" name="gender"> Male
+          <input type="radio" value="Female" name="gender"> Female
+          <input type="radio" value="Other" name="gender"> Other
+          </label>
+
+        </div>
+        <!-- <br></br> -->
+        </br>
+        <label>
+      <b>  Current Address : </b>
+      </label>
+        <!-- <textarea cols="80" rows="5" placeholder="Current Address" value="address" name="address" required> -->
+        <input type="text" name="address" placeholder="Current address" size="5" required />
+      </textarea>
+      <br></br>
+
+      <label><b>Height:</b></label>
+      <input type="number" name="Height" placeholder="in cm" size="5" min="50" max="500" required />
+      <label><b>Weight:</b></label>
+      <input type="number" name="Weight" placeholder="in Kg" size="5" min="1" max="300" required />
+
+      <label> <b>Heart Rate:</b></label>
+      <input type="number" name="Hrate" placeholder="in BPM" size="5" min="0" max="300" required />
+      <label><b>Oxygen Level:</b></label>
+      <input type="number" name="Olevel" placeholder="in %" size="5" min="0" max="100" required />
+      <label><b>Blood Pressure:</b></label>
+      <input type="tel" name="BloodP" placeholder="in mmHg (fill in this formant 120/80)" size="10" pattern="[0-9]{3}/[0-9]{2}" required />
+
+      <!-- <label> <h2>Diseases : </h2></label> -->
+      <h2>Diseases :</h2>
+        <label>
+        <input type="radio" id="chkNo" value="Atherosclerosis" name="diseases"> Atherosclerosis<br></br>
+        <input type="radio" id="chkNo" value="Heart disease" name="diseases"> Heart disease<br></br>
+        <input type="radio" id="chkNo" value="Stroke" name="diseases"> Stroke<br></br>
+        <input type="radio" id="chkNo" value="Obesity" name="diseases"> Obesity<br></br>
+        <input type="radio" id="chkNo" value="Type 2 Diabetes" name="diseases"> Type 2 Diabetes<br></br>
+        <input type="radio" id="chkNo" value="Lung Cancer" name="diseases"> Lung Cancer<br></br>
+        <input type="radio" id="chkNo" value="Asthma" name="diseases"> Asthma<br></br>
+        <input type="radio" id="chkNo" value="Blindness" name="diseases"> Blindness<br></br>
+
+        <input type="radio" value="" id="chkYes" name="diseases" /> Other <br></br>
+        <div id="dvtext">
+            <!-- Enter Disease name : -->
+            <input type="text" value="" id="txtBox" placeholder="Enter Disease name" name="diseasesS" />
+        </div>
+        </label>
+
+
+      <h2>Disease Level :</h2>
+        <label>
+        <input type="radio" value="level1" name="level"> level1
+        <input type="radio" value="level2" name="level"> level2
+        <input type="radio" value="level3" name="level"> level3
+        </label>
+      <br>
+      <!-- <br> -->
+      <button type="submit" class="btn"> Save </button>
+      <!-- <button type="submit" class="btn1"><b>Make New Appointment</b></button>  -->
+
+</form>
+</body>
+</html>

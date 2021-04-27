@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sign-in/">
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link rel="stylesheet" href="/css/pageCSS.css" href="text/css">
+
+<style>
+   /* RESET RULES
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+@import url("https://fonts.googleapis.com/css?family=Lato:400,700&display=swap");
+
+:root {
+  --page-header-bgColor: #242e42;
+  --page-header-bgColor-hover: #1d2636;
+  --page-header-txtColor: #dde9f8;
+  --page-header-headingColor: #7889a4;
+  --page-header-width: 220px;
+  --page-content-bgColor: #f0f1f6;
+  --page-content-txtColor: #171616;
+  --page-content-blockColor: #fff;
+  --white: #fff;
+  --black: #333;
+  --blue: #00b9eb;
+  --red: #ec1848;
+  --border-radius: 4px;
+  --box-shadow: 0 0 10px -2px rgba(0, 0, 0, 0.075);
+  --switch-bgLightModeColor: #87cefa;
+  --switch-sunColor: gold;
+  --switch-moonColor: #f4f4f4;
+  --switch-bgDarkModeColor: #1f1f27;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+ul {
+  list-style: none;
+}
+
+a,
+button {
+  color: inherit;
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  background: none;
+  cursor: pointer;
+}
+
+input {
+  -webkit-appearance: none;
+}
+
+[type="checkbox"] {
+  position: absolute;
+  left: -9999px;
+}
+
+label {
+  cursor: pointer;
+}
+
+button,
+input {
+  border: none;
+}
+
+svg {
+  display: block;
+}
+
+body {
+  font: 16px/1.5 "Lato", sans-serif;
+}
+
+
+/* HEADER STYLES
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.page-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: auto;
+  padding-top: 20px;
+  width: var(--page-header-width);
+  color: var(--page-header-txtColor);
+  background: var(--page-header-bgColor);
+}
+
+/* In case you prefer an absolutely positioned header that covers the full page height, add these styles*/
+/*body {
+  position: relative;
+}
+
+.page-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+}*/
+
+/*remove these styles*/
+/*.page-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: auto;
+} */
+
+.page-header nav {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.page-header .logo {
+  display: block;
+  margin: 0 15px;
+}
+
+.page-header .logo svg {
+  max-width: 120px;
+  fill: var(--white);
+}
+
+.page-header .toggle-mob-menu {
+  display: none;
+  margin-left: 5px;
+  padding: 4px;
+  background: var(--page-content-blockColor);
+  border-radius: var(--border-radius);
+}
+
+.page-header .toggle-mob-menu svg {
+  fill: var(--black);
+  transition: transform 0.2s;
+}
+
+.page-header .admin-menu {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  margin-top: 35px;
+}
+
+.page-header .admin-menu li:nth-last-child(2) {
+  margin-bottom: 35px;
+}
+
+.page-header .admin-menu li:last-child {
+  margin-top: auto;
+  margin-bottom: 20px;
+}
+
+.page-header .admin-menu li > * {
+  width: 100%;
+  padding: 12px 15px;
+}
+
+.page-header .admin-menu .switcher {
+  display: inline-block;
+  width: auto;
+}
+
+.page-header .admin-menu .menu-heading h3 {
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 12px;
+  margin-top: 12px;
+  color: var(--page-header-headingColor);
+}
+
+.page-header .admin-menu svg {
+  width: 20px;
+  height: 20px;
+  fill: var(--page-header-txtColor);
+  margin-right: 10px;
+}
+
+.page-header .admin-menu a,
+.page-header .admin-menu button {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.page-header .admin-menu a:hover,
+.page-header .admin-menu a:focus,
+.page-header .admin-menu button:hover,
+.page-header .admin-menu button:focus {
+  background: var(--page-header-bgColor-hover);
+  color: var(--blue);
+  outline: none;
+}
+
+.page-header .admin-menu a:hover svg,
+.page-header .admin-menu a:focus svg,
+.page-header .admin-menu button:hover svg,
+.page-header .admin-menu button:focus svg {
+  fill: var(--blue);
+}
+
+
+/* PAGE CONTENT STYLES
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.page-content {
+  position: relative;
+  left: var(--page-header-width);
+  width: calc(100% - var(--page-header-width));
+  min-height: 100vh;
+  padding: 30px;
+  color: var(--page-content-txtColor);
+  background: #9b98a0;
+}
+
+.search-and-user {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-column-gap: 50px;
+  align-items: center;
+  background: var(--page-content-bgColor);
+  margin-bottom: 30px;
+}
+
+.search-and-user form {
+  position: relative;
+}
+
+.search-and-user [type="search"] {
+  width: 100%;
+  height: 50px;
+  font-size: 1.5rem;
+  padding-left: 15px;
+  background: var(--page-content-blockColor);
+  color: var(--white);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+}
+
+.search-and-user ::placeholder {
+  color: var(--page-content-txtColor);
+}
+
+.search-and-user form svg {
+  width: 26px;
+  height: 26px;
+  fill: var(--page-content-txtColor);
+}
+
+.search-and-user form button {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+}
+
+.search-and-user .admin-profile {
+  display: flex;
+  align-items: center;
+}
+
+.search-and-user .admin-profile .greeting {
+  margin: 0 10px 0 20px;
+}
+
+.search-and-user .admin-profile svg {
+  width: 30px;
+  height: 30px;
+}
+
+.search-and-user .admin-profile .notifications {
+  position: relative;
+}
+
+.search-and-user .admin-profile .badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: -10px;
+  right: -3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  font-size: 10px;
+  color: var(--white);
+  background: var(--red);
+}
+
+.page-content .grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 30px;
+}
+
+.page-content .grid > article {
+  display: flex;
+  height: auto;
+  background: var(--page-content-blockColor);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+}
+
+.page-content .grid > article:first-child,
+.page-content .grid > article:last-child {
+  grid-column: 1 / -1;
+}
+
+
+/* MQ RULES
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+@media screen and (max-width: 767px) {
+  .page-header,
+  .page-content {
+    position: static;
+    width: 100%;
+  }
+
+  .page-header {
+    padding: 10px;
+  }
+
+  .page-header nav {
+    flex-direction: row;
+  }
+
+  .page-header .logo {
+    margin: 0;
+  }
+
+  .page-header .logo svg {
+    width: 83px;
+    height: 35px;
+  }
+
+  .page-header .toggle-mob-menu {
+    display: block;
+  }
+
+  .page-header .admin-menu {
+    position: absolute;
+    left: 98px;
+    top: 57px;
+    margin-top: 0;
+    z-index: 2;
+    border-radius: var(--border-radius);
+    background: var(--page-header-bgColor);
+    visibility: hidden;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: all 0.2s;
+  }
+
+  .page-header .admin-menu li:nth-last-child(2) {
+    margin-bottom: 12px;
+  }
+
+  .page-header .admin-menu li:last-child button,
+  .search-and-user .admin-profile .greeting {
+    display: none;
+  }
+
+  .page-content {
+    min-height: 0;
+    padding: 10px;
+  }
+
+  .page-content .grid {
+    grid-gap: 10px;
+  }
+
+  .search-and-user {
+    position: absolute;
+    left: 131px;
+    top: 10px;
+    padding: 0;
+    grid-column-gap: 5px;
+    width: calc(100% - 141px);
+    border-radius: var(--border-radius);
+    background: transparent;
+  }
+
+  .search-and-user [type="search"] {
+    font-size: 1rem;
+    height: 35px;
+  }
+
+  .search-and-user form svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .search-and-user .admin-profile svg {
+    fill: var(--white);
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .page-content .grid > article {
+    grid-column: 1 / -1;
+  }
+}
+
+
+/* BODY CLASSES
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.mob-menu-opened .toggle-mob-menu svg {
+  transform: rotate(180deg);
+}
+
+.mob-menu-opened .page-header .admin-menu {
+  transform: scale(1);
+  visibility: visible;
+  opacity: 1;
+}
+
+@media screen and (min-width: 768px) {
+  .collapsed .page-header {
+    width: 40px;
+  }
+
+  .collapsed .page-header .admin-menu li > * {
+    padding: 10px;
+  }
+
+  .collapsed .page-header .logo,
+  .collapsed .page-header .admin-menu span,
+  .collapsed .page-header .admin-menu .menu-heading {
+    display: none;
+  }
+
+  .collapsed .page-header .admin-menu svg {
+    margin-right: 0;
+  }
+
+  .collapsed .page-header .collapse-btn svg {
+    transform: rotate(180deg);
+  }
+
+  .collapsed .page-content {
+    left: 40px;
+    width: calc(100% - 40px);
+  }
+}
+
+
+/* SWITCH STYLES
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.switch label {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-column-gap: 10px;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.switch span:first-child {
+  position: relative;
+  width: 50px;
+  height: 26px;
+  border-radius: 15px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.4);
+  background: var(--switch-bgLightModeColor);
+  transition: all 0.3s;
+}
+
+.switch span:first-child::before,
+.switch span:first-child::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+}
+
+.switch span:first-child::before {
+  top: 1px;
+  left: 1px;
+  width: 24px;
+  height: 24px;
+  background: var(--white);
+  z-index: 1;
+  transition: transform 0.3s;
+}
+
+.switch span:first-child::after {
+  top: 50%;
+  right: 8px;
+  width: 10px;
+  height: 10px;
+  transform: translateY(-50%);
+  background: var(--switch-sunColor);
+  box-shadow: 0 0 4px 2px #ffdb1a;
+}
+
+.switch [type="checkbox"]:checked + label span:first-child {
+  background: var(--switch-bgDarkModeColor);
+}
+
+.switch [type="checkbox"]:focus + label span:first-child {
+  box-shadow: 0 3px 5px rgba(255, 255, 255, 0.25);
+}
+
+.switch [type="checkbox"]:checked + label span:first-child::before {
+  transform: translateX(24px);
+}
+
+.switch [type="checkbox"]:checked + label span:first-child::after {
+  left: 12px;
+  width: 15px;
+  height: 15px;
+  background: transparent;
+  box-shadow: -2px -5px 0 var(--switch-moonColor);
+  transform: translateY(-50%) rotate(-72deg);
+}
+
+
+/* LIGHT MODE STYLES
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.light-mode {
+  --page-header-bgColor: #f1efec;
+  --page-header-bgColor-hover: #b9e4e0;
+  --page-header-txtColor: #2c303a;
+  --page-header-headingColor: #979595;
+  --page-content-bgColor: #fff;
+  --box-shadow: 0 0 10px -2px rgba(0, 0, 0, 0.25);
+}
+
+.light-mode .page-header .admin-menu a:hover,
+.light-mode .page-header .admin-menu a:focus,
+.light-mode .page-header .admin-menu button:hover,
+.light-mode .page-header .admin-menu button:focus {
+  color: var(--black);
+}
+
+.light-mode .page-header .logo svg,
+.light-mode .page-header .admin-menu a:hover svg,
+.light-mode .page-header .admin-menu a:focus svg,
+.light-mode .page-header .admin-menu button:hover svg,
+.light-mode .page-header .admin-menu button:focus svg {
+  fill: var(--black);
+}
+
+.light-mode .switch [type="checkbox"]:focus + label span:first-child {
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.25);
+}
+
+@media screen and (max-width: 767px) {
+  .light-mode .search-and-user .admin-profile svg {
+    fill: var(--black);
+  }
+}
+
+
+/* FOOTER
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.page-footer {
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.page-footer a {
+  margin-left: 4px;
+}
+
+    </style>
+</head>
+<body>
+<svg style="display:none;">
+  <symbol id="logo" viewBox="0 0 140 59">
+    <g>
+      <path d="M6.8 57c0 .4-.1.7-.2.9-.1.2-.3.4-.4.5-.1.1-.4.199-.5.3-.2 0-.3.1-.5.1-.1 0-.3 0-.5-.1-.2 0-.4-.101-.5-.3-.2 0-.4-.2-.5-.4-.1-.2-.2-.5-.2-.9V44.7h-2c-.3 0-.6-.101-.8-.2-.2-.1-.3-.2-.5-.4s-.2-.3-.2-.4v-.4c0-.1 0-.2.1-.399 0-.2.1-.301.2-.4.1-.1.3-.3.5-.4.1 0 .4-.1.7-.1h2.1v-3.5c0-1 .1-1.9.3-2.7C4.1 35 4.5 34.3 5 33.7c.5-.6 1.1-1.1 1.9-1.4.8-.3 1.7-.5 2.7-.5.9 0 1.5.101 1.8.4.3.3.5.6.5 1.1 0 .3-.1.601-.3.9-.2.3-.6.4-1.2.4h-.6c-.6 0-1.1.101-1.5.301-.4.199-.7.5-.9.8C7.2 36 7 36.5 7 37c-.1.5-.1 1-.1 1.6V42h2.7c.3 0 .6.1.8.2.2.1.3.2.5.399.1.101.2.301.2.401 0 .2.1.3.1.4 0 .1 0 .3-.1.399 0 .2-.1.3-.2.4-.1.1-.3.3-.5.399-.2.101-.5.2-.8.2H6.8V57z" />
+      <path d="M30.4 50.2c0 1.3-.2 2.5-.7 3.5-.5 1.1-1.1 2-1.9 2.8-.8.8-1.8 1.4-2.8 1.8-1.1.4-2.3.601-3.5.601-1.3 0-2.4-.2-3.5-.601-1.1-.399-2-1-2.8-1.8-.8-.8-1.4-1.7-1.9-2.8-.5-1.101-.7-2.2-.7-3.5s.2-2.4.7-3.5c.5-1.101 1.1-2 1.9-2.7.8-.8 1.7-1.4 2.8-1.8 1.1-.4 2.3-.601 3.5-.601 1.3 0 2.4.2 3.5.601 1.1.399 2 1 2.8 1.8.8.8 1.4 1.7 1.9 2.7.5 1.1.7 2.3.7 3.5zm-3.4 0c0-.8-.1-1.5-.4-2.3-.2-.7-.6-1.4-1.1-1.9s-1-1-1.7-1.3c-.7-.3-1.5-.5-2.4-.5s-1.7.2-2.4.5-1.3.8-1.7 1.3c-.5.5-.8 1.2-1.1 1.9-.2.699-.4 1.5-.4 2.3s.1 1.5.4 2.3c.2.7.6 1.4 1.1 1.9.5.6 1 1 1.7 1.3s1.5.5 2.4.5 1.7-.2 2.4-.5 1.3-.8 1.7-1.3c.5-.601.8-1.2 1.1-1.9.3-.7.4-1.5.4-2.3z" />
+      <path d="M38.1 44.8h.1c.4-.899 1-1.7 1.9-2.3s1.8-.9 2.9-.9c.5 0 1 .101 1.3.301.4.199.6.6.6 1.1 0 .6-.2 1-.6 1.2-.4.2-.8.3-1.4.3h-.2c-1.3 0-2.4.5-3.2 1.4-.8.899-1.3 2.3-1.3 4.1v7c0 .4-.1.7-.2.9-.1.199-.3.399-.4.5-.2.1-.4.199-.5.3-.2 0-.3.1-.5.1-.1 0-.3 0-.5-.1-.2 0-.4-.101-.5-.3-.1-.2-.3-.301-.4-.5C35 57.7 35 57.4 35 57V43.5c0-.4.1-.7.2-.9.1-.199.3-.399.4-.5.2-.1.3-.199.5-.199s.3-.101.5-.101c.1 0 .3 0 .4.101.2 0 .3.1.5.199.2.101.3.301.4.5.1.2.2.5.2.9v1.3z" />
+      <path d="M49.2 51.3c0 .7.2 1.4.5 2 .3.601.7 1.2 1.2 1.601.5.5 1.1.8 1.7 1.1s1.3.4 2 .4c1 0 1.8-.2 2.5-.5.7-.4 1.2-.801 1.8-1.2.2-.2.4-.3.6-.4.2-.301.3-.301.5-.301.4 0 .7.1 1 .4.3.199.4.6.4 1 0 .1 0 .3-.1.5s-.2.4-.4.7c-1.6 1.7-3.7 2.5-6.3 2.5-1.3 0-2.4-.199-3.5-.6s-2-1-2.8-1.8c-.8-.8-1.4-1.7-1.8-2.7-.4-1.1-.7-2.3-.7-3.6 0-1.301.2-2.5.6-3.5.4-1.101 1-2 1.8-2.801.8-.8 1.7-1.399 2.7-1.8 1-.399 2.2-.6 3.4-.6 2.1 0 3.8.6 5.2 1.8s2.3 2.9 2.6 5.2c0 .3.1.5.1.6v.5c0 1.101-.6 1.7-1.7 1.7H49.2V51.3zm9.9-2.5c0-.7-.1-1.3-.3-1.8-.2-.6-.5-1.1-.9-1.5s-.9-.7-1.4-1c-.6-.2-1.2-.4-2-.4-.7 0-1.4.101-2 .4-.6.2-1.2.6-1.6 1-.5.4-.8.9-1.1 1.5-.3.6-.5 1.2-.5 1.8h9.8z" />
+      <path d="M77.9 55.1c.399-.3.8-.5 1.199-.5.4 0 .7.101 1 .4.2.3.4.6.4.9 0 .199 0 .5-.1.699a1.856 1.856 0 01-.599.701c-.7.5-1.399.9-2.3 1.2s-1.8.4-2.7.4c-1.3 0-2.5-.2-3.5-.601-1.1-.399-2-1-2.8-1.8s-1.4-1.7-1.8-2.7c-.4-1.1-.7-2.3-.7-3.6s.2-2.5.7-3.601c.4-1.1 1.1-2 1.8-2.8.8-.8 1.7-1.399 2.8-1.8 1.101-.4 2.2-.6 3.5-.6.9 0 1.7.1 2.601.399C78.2 42 79 42.4 79.6 43l.7.7c.101.2.2.5.2.7 0 .399-.1.8-.4 1-.3.3-.6.399-1 .399-.199 0-.399 0-.5-.1-.2-.099-.4-.199-.7-.499-.301-.3-.7-.5-1.2-.7s-1-.3-1.7-.3c-.9 0-1.6.2-2.3.5s-1.2.8-1.7 1.3-.8 1.2-1.1 1.9c-.2.699-.4 1.5-.4 2.3s.1 1.5.3 2.2c.2.699.6 1.3 1 1.899.5.5 1 1 1.7 1.3.7.301 1.4.5 2.3.5.7 0 1.3-.1 1.8-.3.4-.099.9-.299 1.3-.699z" />
+      <path d="M94.6 56.2h-.1c-.6.899-1.4 1.6-2.3 2.1-.9.5-2 .7-3.3.7-.7 0-1.301-.1-2-.3-.7-.2-1.4-.5-1.9-.9-.6-.399-1.1-.899-1.4-1.6-.4-.7-.6-1.5-.6-2.4 0-1.3.3-2.2 1-3 .7-.7 1.6-1.3 2.7-1.7 1.1-.399 2.3-.6 3.7-.699 1.399-.101 2.8-.2 4.199-.2v-.5c0-1.2-.399-2.101-1.1-2.7s-1.7-.9-3-.9c-.7 0-1.4.101-2 .301-.6.199-1.3.5-1.9 1-.3.199-.699.3-1 .3-.3 0-.6-.101-.899-.4-.2-.2-.4-.6-.4-.899 0-.2.101-.5.2-.7s.3-.4.6-.601c.7-.5 1.601-1 2.5-1.3 1-.3 2-.5 3.2-.5s2.2.2 3.101.5c.899.3 1.6.8 2.199 1.4.601.6 1 1.3 1.301 2.1.3.8.399 1.601.399 2.5V56.9c0 .3-.1.6-.2.899-.1.201-.2.401-.4.501-.2.101-.3.2-.5.2s-.3.1-.4.1c-.1 0-.3 0-.399-.1-.2 0-.301-.1-.5-.2-.201-.1-.301-.3-.401-.5s-.2-.5-.2-.899v-.7h-.2zm-.9-5.5c-.8 0-1.7 0-2.5.1-.9.101-1.7.2-2.4.4s-1.3.5-1.8.9-.7 1-.7 1.7c0 .5.101.9.3 1.2.2.3.5.6.801.8.3.2.699.4 1.1.4.4.1.8.1 1.2.1 1.5 0 2.7-.5 3.5-1.399.8-.9 1.2-2.101 1.2-3.5v-.9h-.7v.199z" />
+      <path d="M111.4 45.4c-.5-.5-1-.801-1.5-1-.5-.2-1.101-.301-1.601-.301-.399 0-.7 0-1.1.101-.4.1-.7.2-1 .399-.3.2-.5.4-.7.7s-.3.601-.3 1c0 .7.3 1.2.899 1.601.601.3 1.601.6 2.801.899.8.2 1.5.4 2.199.7.7.3 1.301.6 1.801 1s.899.8 1.199 1.4c.301.5.4 1.199.4 1.899 0 1-.2 1.8-.6 2.5-.4.7-.9 1.2-1.5 1.7-.601.4-1.301.7-2.101.9-.8.199-1.6.3-2.399.3-1 0-2-.2-2.9-.5-1-.3-1.8-.8-2.5-1.4-.3-.3-.5-.5-.6-.7-.098-.198-.098-.398-.098-.598 0-.4.101-.8.4-1 .3-.3.6-.4 1-.4.399 0 .8.2 1.2.5.5.5 1.1.801 1.699 1.101.601.3 1.2.399 1.9.399.4 0 .8 0 1.2-.1.399-.1.7-.2 1-.4.3-.199.6-.399.8-.699.2-.301.3-.7.3-1.2 0-.8-.399-1.3-1.1-1.7s-1.8-.7-3.2-1c-.6-.1-1.1-.3-1.7-.5-.6-.2-1.1-.5-1.6-.8s-.8-.8-1.101-1.3c-.3-.5-.399-1.2-.399-2 0-.9.2-1.601.5-2.301.401-.6.801-1.2 1.401-1.6.601-.4 1.2-.7 2-.9.7-.199 1.5-.3 2.301-.3.899 0 1.699.101 2.6.4.8.3 1.6.7 2.2 1.2.3.3.5.5.6.699.101.2.101.4.101.601 0 .399-.101.7-.4 1s-.6.399-1 .399c-.402-.199-.802-.399-1.102-.699z" />
+      <path d="M126 58.4c-.6.3-1.3.399-2.1.399-1.601 0-2.801-.399-3.601-1.3s-1.2-2.2-1.2-3.9v-9H117.2c-.3 0-.601 0-.8-.1-.2-.1-.4-.2-.5-.3-.101-.101-.2-.3-.2-.4 0-.2-.101-.3-.101-.399 0-.101 0-.2.101-.4 0-.2.1-.3.2-.4.1-.1.3-.3.5-.399.199-.101.5-.2.8-.2h1.899v-3.2c0-.399.101-.7.2-.899.101-.2.3-.4.4-.601.2-.1.399-.2.5-.3.2 0 .3-.1.5-.1.1 0 .3 0 .5.1.2 0 .3.1.5.3.2.101.3.3.399.601.101.199.2.6.2.899V42h3.2c.3 0 .6.1.8.2.2.1.3.2.5.399.102.101.202.301.202.401 0 .2.1.3.1.4 0 .1 0 .3-.1.399 0 .2-.1.3-.2.4-.1.1-.3.3-.5.3-.2.1-.5.1-.8.1h-3.2V53.2c0 1 .2 1.7.5 2.1.4.4.8.601 1.4.601.2 0 .5 0 .7-.101.199-.1.399-.1.6-.1.4 0 .7.1.9.399.199.301.3.601.3.9s-.101.5-.2.7c0 .401-.2.601-.5.701z" />
+      <path d="M133.2 44.8h.1c.4-.899 1-1.7 1.9-2.3.899-.6 1.8-.9 2.899-.9.5 0 1 .101 1.301.301.4.199.6.599.6 1.099 0 .6-.2 1-.6 1.2-.4.2-.801.3-1.4.3h-.2c-1.3 0-2.399.5-3.2 1.4-.8.899-1.3 2.3-1.3 4.1v7c0 .4-.1.7-.2.9-.1.199-.3.399-.399.5-.101.1-.4.199-.5.3-.2 0-.3.1-.5.1-.101 0-.3 0-.5-.1-.2 0-.4-.101-.5-.3-.2-.101-.3-.301-.4-.5-.1-.2-.2-.5-.2-.9V43.5c0-.4.101-.7.2-.9.101-.199.3-.399.4-.5.2-.1.3-.199.5-.199s.3-.101.5-.101c.1 0 .3 0 .399.101.2 0 .301.1.5.199.2.101.301.301.4.5.1.2.2.5.2.9v1.3z" />
+    </g>
+    <g>
+      <g>
+        <path fill="#08A6DF" d="M70 32.9c-9.1 0-16.5-7.4-16.5-16.5 0-4.8 2.1-9.3 5.7-12.4.5-.4 1.2-.4 1.6.1.4.5.4 1.2-.1 1.6-3.1 2.7-4.9 6.6-4.9 10.7 0 7.8 6.4 14.2 14.2 14.2s14.2-6.4 14.2-14.2c0-7.8-6.4-14.1-14.2-14.1-1.9 0-3.7.4-5.4 1.1-.6.2-1.3 0-1.5-.6-.2-.6 0-1.3.6-1.5C65.7.4 67.8 0 70 0c9.1 0 16.5 7.4 16.5 16.5S79.1 32.9 70 32.9z" />
+      </g>
+      <g>
+        <path fill="#7C2A8A" d="M70 28.4c-6.6 0-11.9-5.4-11.9-11.9 0-6.6 5.4-11.9 11.9-11.9 5 0 9.5 3.2 11.2 7.9.5 1.3.7 2.6.7 4 0 .6-.5 1.1-1.101 1.1-.6 0-1.1-.5-1.1-1.1 0-1.1-.2-2.2-.601-3.3-1.399-3.8-5-6.4-9.1-6.4-5.3 0-9.6 4.3-9.6 9.6s4.3 9.6 9.6 9.6c.6 0 1.1.5 1.1 1.1.002.8-.498 1.3-1.098 1.3z" />
+      </g>
+      <g>
+        <path fill="#EC1848" d="M70 23.9c-4.1 0-7.4-3.3-7.4-7.4s3.3-7.4 7.4-7.4c.6 0 1.1.5 1.1 1.1 0 .6-.5 1.1-1.1 1.1-2.8 0-5.1 2.3-5.1 5.1s2.3 5.1 5.1 5.1 5.1-2.3 5.1-5.1c0-.6.5-1.1 1.101-1.1.6 0 1.1.5 1.1 1.1.099 4.2-3.201 7.5-7.301 7.5z" />
+      </g>
+    </g>
+  </symbol>
+  <symbol id="down" viewBox="0 0 16 16">
+    <polygon points="3.81 4.38 8 8.57 12.19 4.38 13.71 5.91 8 11.62 2.29 5.91 3.81 4.38" />
+  </symbol>
+  <symbol id="users" viewBox="0 0 16 16">
+    <path d="M8,0a8,8,0,1,0,8,8A8,8,0,0,0,8,0ZM8,15a7,7,0,0,1-5.19-2.32,2.71,2.71,0,0,1,1.7-1,13.11,13.11,0,0,0,1.29-.28,2.32,2.32,0,0,0,.94-.34,1.17,1.17,0,0,0-.27-.7h0A3.61,3.61,0,0,1,5.15,7.49,3.18,3.18,0,0,1,8,4.07a3.18,3.18,0,0,1,2.86,3.42,3.6,3.6,0,0,1-1.32,2.88h0a1.13,1.13,0,0,0-.27.69,2.68,2.68,0,0,0,.93.31,10.81,10.81,0,0,0,1.28.23,2.63,2.63,0,0,1,1.78,1A7,7,0,0,1,8,15Z" />
+  </symbol>
+  <symbol id="collection" viewBox="0 0 16 16">
+    <rect width="7" height="7" />
+    <rect y="9" width="7" height="7" />
+    <rect x="9" width="7" height="7" />
+    <rect x="9" y="9" width="7" height="7" />
+  </symbol>
+  <symbol id="charts" viewBox="0 0 16 16">
+    <polygon points="0.64 7.38 -0.02 6.63 2.55 4.38 4.57 5.93 9.25 0.78 12.97 4.37 15.37 2.31 16.02 3.07 12.94 5.72 9.29 2.21 4.69 7.29 2.59 5.67 0.64 7.38" />
+    <rect y="9" width="2" height="7" />
+    <rect x="12" y="8" width="2" height="8" />
+    <rect x="8" y="6" width="2" height="10" />
+    <rect x="4" y="11" width="2" height="5" />
+  </symbol>
+  <symbol id="pages" viewBox="0 0 16 16">
+    <rect x="4" width="12" height="12" transform="translate(20 12) rotate(-180)" />
+    <polygon points="2 14 2 2 0 2 0 14 0 16 2 16 14 16 14 14 2 14" />
+  </symbol>
+  <symbol id="settings" viewBox="0 0 16 16">
+    <rect x="9.78" y="5.34" width="1" height="7.97" />
+    <polygon points="7.79 6.07 10.28 1.75 12.77 6.07 7.79 6.07" />
+    <rect x="4.16" y="1.75" width="1" height="7.97" />
+    <polygon points="7.15 8.99 4.66 13.31 2.16 8.99 7.15 8.99" />
+    <rect x="1.28" width="1" height="4.97" />
+    <polygon points="3.28 4.53 1.78 7.13 0.28 4.53 3.28 4.53" />
+    <rect x="12.84" y="11.03" width="1" height="4.97" />
+    <polygon points="11.85 11.47 13.34 8.88 14.84 11.47 11.85 11.47" />
+  </symbol>
+  <symbol id="collapse" viewBox="0 0 16 16">
+    <polygon points="11.62 3.81 7.43 8 11.62 12.19 10.09 13.71 4.38 8 10.09 2.29 11.62 3.81" />
+  </symbol>
+  <symbol id="search" viewBox="0 0 16 16">
+    <path d="M6.57,1A5.57,5.57,0,1,1,1,6.57,5.57,5.57,0,0,1,6.57,1m0-1a6.57,6.57,0,1,0,6.57,6.57A6.57,6.57,0,0,0,6.57,0Z" />
+    <rect x="11.84" y="9.87" width="2" height="5.93" transform="translate(-5.32 12.84) rotate(-45)" />
+  </symbol>
+</svg>
+<header class="page-header">
+  <nav>
+    <!-- <a href="#0" aria-label=" logo" class="logo">
+      <svg width="140" height="49">
+        <use xlink:href="#logo"></use>
+      </svg>
+    </a> -->
+    <button class="toggle-mob-menu" aria-expanded="false" aria-label="open menu">
+      <svg width="20" height="20" aria-hidden="true">
+        <use xlink:href="#down"></use>
+      </svg>
+    </button>
+    <ul class="admin-menu">
+      <li class="menu-heading">
+        <h3>Admin</h3>
+      </li>
+      <li>
+        <a href="/newA">
+          <?xml version="1.0" encoding="iso-8859-1"?>
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 612.001 612.001" style="enable-background:new 0 0 612.001 612.001;" xml:space="preserve">
+<g>
+	<g>
+		<g>
+			<path d="M567.734,57.47c-28.593-28.593-66.607-44.338-107.044-44.338c-40.435,0-78.451,15.745-107.041,44.338
+				c-28.593,28.593-44.34,66.606-44.34,107.044c0,40.435,15.747,78.449,44.34,107.041c28.592,28.593,66.606,44.341,107.041,44.341
+				c40.436,0,78.452-15.748,107.044-44.341C626.757,212.532,626.757,116.494,567.734,57.47z M543.697,247.519
+				c-22.171,22.174-51.652,34.384-83.007,34.384c-31.356,0-60.833-12.21-83.004-34.384c-22.173-22.171-34.383-51.649-34.383-83.004
+				s12.21-60.836,34.383-83.007c22.171-22.171,51.65-34.382,83.004-34.382c31.356,0,60.836,12.21,83.007,34.382
+				C589.466,127.275,589.466,201.75,543.697,247.519z"/>
+			<path d="M508.379,146.853h-32.682v-32.681c0-9.387-7.61-16.996-16.996-16.996s-16.996,7.609-16.996,16.996v32.681h-32.682
+				c-9.386,0-16.996,7.61-16.996,16.996c0,9.389,7.61,16.996,16.996,16.996h32.682v32.683c0,9.389,7.61,16.996,16.996,16.996
+				s16.996-7.607,16.996-16.996v-32.683h32.682c9.386,0,16.996-7.607,16.996-16.996
+				C525.375,154.463,517.766,146.853,508.379,146.853z"/>
+			<path d="M361.408,470.254c-23.202-16.36-50.76-28.432-80.75-35.675c27.815-24.092,45.865-62.632,45.865-105.984
+				c0-72.819-50.922-132.062-113.514-132.062c-62.589,0-113.512,59.242-113.512,132.062c0,43.353,18.05,81.893,45.865,105.987
+				c-29.988,7.239-57.546,19.312-80.748,35.672C22.947,499.633,0,539.273,0,581.874c0,9.386,7.61,16.996,16.996,16.996h392.027
+				c9.387,0,16.996-7.61,16.996-16.996C426.02,539.273,403.073,499.633,361.408,470.254z M326.523,564.878v-30.355
+				c0-9.386-7.61-16.996-16.996-16.996s-16.996,7.61-16.996,16.996v30.355H133.49v-30.355c0-9.386-7.61-16.996-16.996-16.996
+				s-16.996,7.61-16.996,16.996v30.355H35.77c5.249-24.922,21.989-48.196,48.432-66.841c34.183-24.102,79.929-37.376,128.81-37.376
+				s94.627,13.272,128.807,37.376c26.443,18.645,43.183,41.918,48.43,66.841H326.523z M133.49,328.596
+				c0-54.076,35.673-98.07,79.52-98.07c43.848,0,79.522,43.996,79.522,98.07c0,54.079-35.673,98.073-79.52,98.073
+				S133.49,382.673,133.49,328.596z"/>
+		</g>
+	</g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+</svg>
+          <span>Add New Admin</span>
+        </a>
+      </li>
+
+      <li>
+        <a href="/">
+          <?xml version="1.0" encoding="iso-8859-1"?>
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+   viewBox="0 0 612.001 612.001" style="enable-background:new 0 0 612.001 612.001;" xml:space="preserve">
+<g>
+  <g>
+    <g>
+      <path d="M567.734,57.47c-28.593-28.593-66.607-44.338-107.044-44.338c-40.435,0-78.451,15.745-107.041,44.338
+        c-28.593,28.593-44.34,66.606-44.34,107.044c0,40.435,15.747,78.449,44.34,107.041c28.592,28.593,66.606,44.341,107.041,44.341
+        c40.436,0,78.452-15.748,107.044-44.341C626.757,212.532,626.757,116.494,567.734,57.47z M543.697,247.519
+        c-22.171,22.174-51.652,34.384-83.007,34.384c-31.356,0-60.833-12.21-83.004-34.384c-22.173-22.171-34.383-51.649-34.383-83.004
+        s12.21-60.836,34.383-83.007c22.171-22.171,51.65-34.382,83.004-34.382c31.356,0,60.836,12.21,83.007,34.382
+        C589.466,127.275,589.466,201.75,543.697,247.519z"/>
+      <path d="M508.379,146.853h-32.682v-32.681c0-9.387-7.61-16.996-16.996-16.996s-16.996,7.609-16.996,16.996v32.681h-32.682
+        c-9.386,0-16.996,7.61-16.996,16.996c0,9.389,7.61,16.996,16.996,16.996h32.682v32.683c0,9.389,7.61,16.996,16.996,16.996
+        s16.996-7.607,16.996-16.996v-32.683h32.682c9.386,0,16.996-7.607,16.996-16.996
+        C525.375,154.463,517.766,146.853,508.379,146.853z"/>
+      <path d="M361.408,470.254c-23.202-16.36-50.76-28.432-80.75-35.675c27.815-24.092,45.865-62.632,45.865-105.984
+        c0-72.819-50.922-132.062-113.514-132.062c-62.589,0-113.512,59.242-113.512,132.062c0,43.353,18.05,81.893,45.865,105.987
+        c-29.988,7.239-57.546,19.312-80.748,35.672C22.947,499.633,0,539.273,0,581.874c0,9.386,7.61,16.996,16.996,16.996h392.027
+        c9.387,0,16.996-7.61,16.996-16.996C426.02,539.273,403.073,499.633,361.408,470.254z M326.523,564.878v-30.355
+        c0-9.386-7.61-16.996-16.996-16.996s-16.996,7.61-16.996,16.996v30.355H133.49v-30.355c0-9.386-7.61-16.996-16.996-16.996
+        s-16.996,7.61-16.996,16.996v30.355H35.77c5.249-24.922,21.989-48.196,48.432-66.841c34.183-24.102,79.929-37.376,128.81-37.376
+        s94.627,13.272,128.807,37.376c26.443,18.645,43.183,41.918,48.43,66.841H326.523z M133.49,328.596
+        c0-54.076,35.673-98.07,79.52-98.07c43.848,0,79.522,43.996,79.522,98.07c0,54.079-35.673,98.073-79.52,98.073
+        S133.49,382.673,133.49,328.596z"/>
+    </g>
+  </g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+</svg>
+          <span>Add New User</span>
+        </a>
+      </li>
+
+
+      <li>
+        <a href="/appointment">
+          <?xml version="1.0" encoding="iso-8859-1"?>
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+<g>
+	<g>
+		<rect x="94.815" width="37.926" height="63.21"/>
+	</g>
+</g>
+<g>
+	<g>
+		<path d="M322.37,63.21v40.22c3.922,4.455,6.321,10.28,6.321,16.668c0,13.942-11.344,25.284-25.284,25.284
+			s-25.284-11.342-25.284-25.284c0-6.388,2.399-12.212,6.321-16.668V63.21H132.741v40.22c3.922,4.455,6.321,10.28,6.321,16.668
+			c0,13.942-11.342,25.284-25.284,25.284s-25.284-11.342-25.284-25.284c0-6.388,2.399-12.212,6.321-16.668V63.21h-63.21v107.457
+			H385.58V63.21H322.37z"/>
+	</g>
+</g>
+<g>
+	<g>
+		<rect x="284.444" width="37.926" height="63.21"/>
+	</g>
+</g>
+<g>
+	<g>
+		<path d="M461.432,335.012c-15.672,0-50.438,6.321-69.531,6.321c-19.093,0-53.859-6.321-69.531-6.321
+			c-10.455,0-18.963,8.507-18.963,18.963v75.852c0,14.538,37.926,30.657,37.926,66.37c0,8.714,7.088,15.802,15.802,15.802
+			s15.802-7.088,15.802-15.802h0.056v-53.728h37.926v54.826c0.568,8.201,7.403,14.705,15.747,14.705
+			c8.714,0,15.802-7.088,15.802-15.802c0-32.658,37.926-54.361,37.926-66.37v-75.852
+			C480.395,343.519,471.888,335.012,461.432,335.012z"/>
+	</g>
+</g>
+<g>
+	<g>
+		<path d="M32.237,208.593v208.593h233.244v-63.21c0-31.369,25.519-56.889,56.889-56.889c9.744,0,22.561,1.556,36.13,3.203
+			c9.469,1.15,19.92,2.417,27.712,2.906v-94.604H32.237z M152.336,360.296H114.41V322.37h37.926V360.296z M152.336,284.444H114.41
+			v-37.926h37.926V284.444z M228.188,360.296h-37.926V322.37h37.926V360.296z M228.188,284.444h-37.926v-37.926h37.926V284.444z
+			 M304.039,284.444h-37.926v-37.926h37.926V284.444z"/>
+	</g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+</svg>
+
+          <span>View Appointments</span>
+
+        </a>
+      </li>
+      <li>
+        <a href="/users">
+          <svg>
+            <use xlink:href="#users"></use>
+          </svg>
+          <span>Users</span>
+        </a>
+
+      </li>
+      <li>
+        <a href="/up">
+          <svg>
+            <use xlink:href="#collection"></use>
+          </svg>
+          <span>Update User</span>
+        </a>
+      </li>
+      <li>
+        <a href="/stats">
+          <svg>
+            <use xlink:href="#charts"></use>
+          </svg>
+          <span>Stats</span>
+        </a>
+      </li>
+      <li>
+        <a href="/first">
+        <?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="495.398px" height="495.398px" viewBox="0 0 495.398 495.398" style="enable-background:new 0 0 495.398 495.398;"
+	 xml:space="preserve">
+<g>
+	<g>
+		<g>
+			<path d="M487.083,225.514l-75.08-75.08V63.704c0-15.682-12.708-28.391-28.413-28.391c-15.669,0-28.377,12.709-28.377,28.391
+				v29.941L299.31,37.74c-27.639-27.624-75.694-27.575-103.27,0.05L8.312,225.514c-11.082,11.104-11.082,29.071,0,40.158
+				c11.087,11.101,29.089,11.101,40.172,0l187.71-187.729c6.115-6.083,16.893-6.083,22.976-0.018l187.742,187.747
+				c5.567,5.551,12.825,8.312,20.081,8.312c7.271,0,14.541-2.764,20.091-8.312C498.17,254.586,498.17,236.619,487.083,225.514z"/>
+			<path d="M257.561,131.836c-5.454-5.451-14.285-5.451-19.723,0L72.712,296.913c-2.607,2.606-4.085,6.164-4.085,9.877v120.401
+				c0,28.253,22.908,51.16,51.16,51.16h81.754v-126.61h92.299v126.61h81.755c28.251,0,51.159-22.907,51.159-51.159V306.79
+				c0-3.713-1.465-7.271-4.085-9.877L257.561,131.836z"/>
+		</g>
+	</g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+</svg>
+          <span>Go to Home</span>
+        </a>
+      </li>
+      <!-- <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br> -->
+
+      <!-- <li class="menu-heading">
+        <h3>More</h3>
+      </li> -->
+
+      <!-- <li>
+        <a href="#0">
+          <svg>
+            <use xlink:href="#settings"></use>
+          </svg>
+          <span>Settings</span>
+        </a>
+      </li> -->
+
+
+      <!-- <li> -->
+        <!-- <a href="/delete">
+              <?xml version="1.0" encoding="iso-8859-1"?>
+          <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+              <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+              	 viewBox="0 0 460.054 460.054" style="enable-background:new 0 0 460.054 460.054;" xml:space="preserve">
+              <g>
+              	<g>
+              		<path d="M40.003,69.679C17.914,69.679,0,87.592,0,109.697c0,22.089,17.914,39.987,40.003,39.987
+              			c22.089,0,40.003-17.898,40.003-39.987C80.006,87.592,62.092,69.679,40.003,69.679z"/>
+              	</g>
+              	<g>
+              		<path d="M40.003,190.032C17.914,190.032,0,207.93,0,230.035c0,22.089,17.914,40.002,40.003,40.002
+              			c22.089,0,40.003-17.913,40.003-40.002C80.006,207.93,62.092,190.032,40.003,190.032z"/>
+              	</g>
+              	<g>
+              		<path d="M40.003,310.37C17.914,310.37,0,328.283,0,350.372c0,22.089,17.914,40.003,40.003,40.003
+              			c22.089,0,40.003-17.914,40.003-40.003C80.006,328.283,62.092,310.37,40.003,310.37z"/>
+              	</g>
+              	<g>
+              		<path d="M429.973,79.601H145.419c-16.611,0-30.081,13.47-30.081,30.096c0,16.612,13.469,30.081,30.081,30.081h284.554
+              			c16.61,0,30.081-13.469,30.081-30.081C460.054,93.071,446.583,79.601,429.973,79.601z"/>
+              	</g>
+              	<g>
+              		<path d="M429.973,199.939H145.419c-16.611,0-30.081,13.469-30.081,30.096c0,16.612,13.469,30.081,30.081,30.081h284.554
+              			c16.61,0,30.081-13.469,30.081-30.081C460.054,213.408,446.583,199.939,429.973,199.939z"/>
+              	</g>
+              	<g>
+              		<path d="M429.973,320.291H145.419c-16.611,0-30.081,13.469-30.081,30.081c0,16.611,13.469,30.08,30.081,30.08h284.554
+              			c16.61,0,30.081-13.469,30.081-30.08C460.054,333.759,446.583,320.291,429.973,320.291z"/>
+              	</g>
+              </g>
+              <g>
+              </g>
+              <g>
+              </g>
+              <g>
+              </g>
+              <g>
+              </g>
+              <g>
+              </g>
+              <g>
+              </g>
+              <g>
+              </g>
+              <g>
+              </g>
+              <g>
+              </g>
+              <g>
+              </g>
+              <g>
+              </g>
+              <g>
+              </g>
+              <g>
+              </g>
+              <g>
+              </g>
+              <g>
+              </g>
+              </svg>
+
+      <span>Delete User</span>
+      </a> -->
+   <!-- </li> -->
+
+      <!-- <li>
+        <form class="" action="/Home1" method="post"> -->
+
+        <!-- <a href="/Home1"> -->
+              <!-- <?xml version="1.0" encoding="iso-8859-1"?> -->
+      <!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+              <!-- <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+              	 viewBox="0 0 297 297" style="enable-background:new 0 0 297 297;" xml:space="preserve">
+              <g>
+              	<g>
+              		<g>
+              			<path d="M155,6.5c-30.147,0-58.95,9.335-83.294,26.995c-2.789,2.023-3.547,5.853-1.739,8.787L92.83,79.374
+              				c0.962,1.559,2.53,2.649,4.328,3.004c1.796,0.354,3.661-0.054,5.145-1.129c14.23-10.323,31.069-15.78,48.698-15.78
+              				c45.783,0,83.03,37.247,83.03,83.03c0,45.783-37.247,83.03-83.03,83.03c-17.629,0-34.468-5.456-48.698-15.78
+              				c-1.484-1.076-3.349-1.486-5.145-1.129c-1.798,0.355-3.366,1.444-4.328,3.004l-22.863,37.093
+              				c-1.808,2.934-1.05,6.763,1.739,8.787C96.05,281.165,124.853,290.5,155,290.5c78.299,0,142-63.701,142-142S233.299,6.5,155,6.5z"
+              				/>
+              			<path d="M90.401,201.757c1.147-2.142,1.021-4.74-0.326-6.76l-15.463-23.195h93.566c12.849,0,23.302-10.453,23.302-23.302
+              				s-10.453-23.302-23.302-23.302H74.612l15.463-23.195c1.348-2.02,1.473-4.618,0.326-6.76c-1.146-2.141-3.377-3.478-5.806-3.478
+              				H40.019c-2.201,0-4.258,1.1-5.479,2.933L1.106,144.847c-1.475,2.212-1.475,5.093,0,7.306l33.433,50.149
+              				c1.221,1.832,3.278,2.933,5.479,2.933h44.577C87.025,205.235,89.256,203.898,90.401,201.757z"/>
+              		</g>
+              	</g>
+              </g> -->
+              <!-- <g>
+              </g>
+              <g>
+              </g>
+              <g>
+              </g>
+              <g>
+              </g>
+              <g>
+              </g>
+              <g>
+              </g>
+              <g>
+              </g>
+              <g>
+              </g>
+              <g>
+              </g>
+              <g>
+              </g>
+              <g>
+              </g>
+              <g>
+              </g>
+              <g>
+              </g>
+              <g>
+              </g>
+              <g>
+              </g> -->
+              <!-- </svg> -->
+          <!-- <span>Log Out</span> -->
+        <!-- </a> -->
+        <!-- <button type="submit" name="button">Log Out</button>
+      </form>
+      </li> -->
+
+      <li>
+        <form class="" action="/Home1" method="post">
+          <button class="btn btn-outline-warning" type="submit" name="button">Log Out</button>
+        </form>
+      </li>
+
+      <!-- <li>
+        <div class="switch">
+          <input type="checkbox" id="mode" checked>
+          <label for="mode">
+            <span></span>
+            <span>Dark</span>
+          </label>
+        </div>
+
+        <button class="collapse-btn" aria-expanded="true" aria-label="collapse menu">
+          <svg aria-hidden="true">
+            <use xlink:href="#collapse"></use>
+          </svg>
+          <span>Collapse</span>
+        </button>
+      </li> -->
+
+    </ul>
+  </nav>
+</header>
+
+
+ <section class="page-content">
+<!--  <section class="search-and-user"> -->
+    <!-- <form>
+      <input type="search" placeholder="Search Pages...">
+      <button type="submit" aria-label="submit form">
+        <svg aria-hidden="true">
+          <use xlink:href="#search"></use>
+        </svg>
+      </button>
+    </form> -->
+    <!-- <div class="admin-profile">
+      <span class="greeting">Hello! Aakash</span>
+      <div class="notifications"> -->
+        <!-- <span class="badge">1</span> -->
+        <!-- <svg>
+          <use xlink:href="#users"></use>
+        </svg>
+      </div>
+    </div>
+  </section> -->
+
+  <div class="">
+    <!-- , p-3 mb-2 bg-primary text-white,border border-info, rounded" style="background-color: #7c8186 -->
+    <div class="row, p-3 border bg, border border-danger, rounded">
+      <h3>Hello, Dr. <%= ad1[0].nameA %></h3>
+      <p><%= ad1[0].idA %></p>
+    </div>
+    <br>
+
+    <div class="">
+      <div class="">
+
+        <div class="">
+
+            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+            <script type="text/javascript">
+
+            // Load Charts and the corechart package.
+            google.charts.load('current', {'packages':['corechart']});
+
+            // Draw the pie chart for Sarah's pizza when Charts is loaded.
+            google.charts.setOnLoadCallback(drawSarahChart);
+
+            // Draw the pie chart for the Anthony's pizza when Charts is loaded.
+            google.charts.setOnLoadCallback(drawAnthonyChart);
+
+            // Callback that draws the pie chart for Sarah's pizza.
+            function drawSarahChart() {
+
+              // Create the data table for Sarah's pizza.
+              var data = new google.visualization.DataTable();
+              data.addColumn('string', 'Topping');
+              data.addColumn('number', 'Slices');
+              data.addRows([
+                ['Male', <%= total1.length %>],
+                ['Female', <%= total2.length %>],
+                ['Other', <%= total3.length %>]
+              ]);
+
+              // Set options for Sarah's pie chart.
+              var options = {title:'Users divided by Gender',
+                             width:488,
+                             height:265};
+
+              // Instantiate and draw the chart for Sarah's pizza.
+              var chart = new google.visualization.PieChart(document.getElementById('Sarah_chart_div'));
+              chart.draw(data, options);
+            }
+
+            // Callback that draws the pie chart for Anthony's pizza.
+            function drawAnthonyChart() {
+
+              // Create the data table for Anthony's pizza.
+              var data = new google.visualization.DataTable();
+              data.addColumn('string', 'Topping');
+              data.addColumn('number', 'Slices');
+              data.addRows([
+                ['0-10', <%= item1.length %>],
+                ['11-20', <%= item2.length %>],
+                ['21-30', <%= item3.length %>],
+                ['31-40', <%= item4.length %>],
+                ['41-50', <%= item5.length %>],
+                ['51-60', <%= item6.length %>],
+                ['61-70', <%= item7.length %>],
+                ['71-80', <%= item8.length %>],
+                ['81-90', <%= item9.length %>],
+                ['91-100', <%= item10.length %>]
+              ]);
+
+              // Set options for Anthony's pie chart.
+              var options = {title:'Categorize by Age difference',
+                             width:488,
+                             height:265};
+
+              // Instantiate and draw the chart for Anthony's pizza.
+              var chart = new google.visualization.PieChart(document.getElementById('Anthony_chart_div'));
+              chart.draw(data, options);
+            }
+        </script>
+        </div>
+
+        <div class="">
+          <table class="columns" style="width: auto">
+            <tr>
+              <td><div id="Sarah_chart_div" style="border: 1px solid #ccc"></div></td>
+              <td><div id="Anthony_chart_div" style="border: 1px solid #ccc"></div></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+<br>
+          <div class="">
+            <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+            <script src="/js/canvasjs.min.js"></script>
+            <script>
+            window.onload = function () {
+
+            var chart = new CanvasJS.Chart("chartContainer", {
+              animationEnabled: true,
+              theme: "light2", // "light1", "light2", "dark1", "dark2"
+              title: {
+                text: "Bar Stats"
+              },
+              axisY: {
+                title: "Users",
+                suffix: ""
+              },
+              axisX: {
+                title: "Diseases"
+              },
+              data: [{
+                type: "column",
+                yValueFormatString: "#,###\"\"",
+                dataPoints: [
+            			{ label: "Atherosclerosis", y: <%= ill1.length %> },
+            			{ label: "Heart disease", y: <%= ill2.length %> },
+            			{ label: "Stroke", y: <%= ill3.length %> },
+            			{ label: "Obesity", y: <%= ill4.length %> },
+            			{ label: "Type 2 Diabetes", y: <%= ill5.length %> },
+            			{ label: "Lung Cancer", y: <%= ill6.length %> },
+            			{ label: "Asthma", y: <%= ill7.length %> },
+            			{ label: "Blindness", y: <%= ill8.length %> },
+                  { label : "Other", y: <%= total1.length + total2.length + total3.length - ill1.length - ill2.length - ill3.length - ill4.length - ill5.length - ill6.length - ill7.length - ill8.length %> }
+
+            		]
+              }]
+            });
+            chart.render();
+
+            }
+            </script>
+
+          </div>
+
+          <br>
+          <div class="w-100"></div>
+          <br>
+
+          <div class="">
+                <div class="p-3 mb-2 bg-secondary text-white" style="border-style: groove;">
+                    <div class="">
+                      <h1>Users Stats data</h1>
+                    </div>
+                    <div class="">
+                      <ul>
+                        <li><%= "Total Male users are: " + total1.length %></li>
+                        <li><%= "Total Female users are: " + total2.length %></li>
+                        <li><%= "Other users are: " + total3.length %></li>
+                      </ul>
+                    </div>
+                    <br>
+                    <div class="">
+                      <h4>Number of users for particular Diseases</h4>
+                      <ul>
+                        <li><%= "1. Atherosclerosis: " + ill1.length %></li>
+                        <li><%= "2. Heart disease: " + ill2.length %></li>
+                        <li><%= "3. Stroke: " + ill3.length %></li>
+                        <li><%= "4. Obesity: " + ill4.length %></li>
+                        <li><%= "5. Type 2 Diabetes: " + ill5.length %></li>
+                        <li><%= "6. Lung Cancer: " + ill6.length %></li>
+                        <li><%= "7. Asthma: " + ill7.length %></li>
+                        <li><%= "8. Blindness: " + ill8.length %></li>
+                        <li>9. Other: <%= total1.length + total2.length + total3.length - ill1.length - ill2.length - ill3.length - ill4.length - ill5.length - ill6.length - ill7.length - ill8.length %></li>
+                      </ul>
+                    </div>
+              </div>
+          </div>
+
+
+    </div>
+  </div>
+
+
+
+  <!-- <footer class="page-footer">
+    <span>Log out </span> -->
+    <!-- <a href="https://georgemartsoukos.com/" target="_blank">
+      <img width="24" height="24" src="https://assets.codepen.io/162656/george-martsoukos-small-logo.svg" alt="George Martsoukos logo">
+    </a>
+  </footer> -->
+</section>
+<script>
+const html = document.documentElement;
+const body = document.body;
+const menuLinks = document.querySelectorAll(".admin-menu a");
+const collapseBtn = document.querySelector(".admin-menu .collapse-btn");
+const toggleMobileMenu = document.querySelector(".toggle-mob-menu");
+const switchInput = document.querySelector(".switch input");
+const switchLabel = document.querySelector(".switch label");
+const switchLabelText = switchLabel.querySelector("span:last-child");
+const collapsedClass = "collapsed";
+const lightModeClass = "light-mode";
+
+/*TOGGLE HEADER STATE*/
+collapseBtn.addEventListener("click", function () {
+  body.classList.toggle(collapsedClass);
+  this.getAttribute("aria-expanded") == "true"
+    ? this.setAttribute("aria-expanded", "false")
+    : this.setAttribute("aria-expanded", "true");
+  this.getAttribute("aria-label") == "collapse menu"
+    ? this.setAttribute("aria-label", "expand menu")
+    : this.setAttribute("aria-label", "collapse menu");
+});
+
+/*TOGGLE MOBILE MENU*/
+toggleMobileMenu.addEventListener("click", function () {
+  body.classList.toggle("mob-menu-opened");
+  this.getAttribute("aria-expanded") == "true"
+    ? this.setAttribute("aria-expanded", "false")
+    : this.setAttribute("aria-expanded", "true");
+  this.getAttribute("aria-label") == "open menu"
+    ? this.setAttribute("aria-label", "close menu")
+    : this.setAttribute("aria-label", "open menu");
+});
+
+/*SHOW TOOLTIP ON MENU LINK HOVER*/
+for (const link of menuLinks) {
+  link.addEventListener("mouseenter", function () {
+    if (
+      body.classList.contains(collapsedClass) &&
+      window.matchMedia("(min-width: 768px)").matches
+    ) {
+      const tooltip = this.querySelector("span").textContent;
+      this.setAttribute("title", tooltip);
+    } else {
+      this.removeAttribute("title");
+    }
+  });
+}
+
+/*TOGGLE LIGHT/DARK MODE*/
+if (localStorage.getItem("dark-mode") === "false") {
+  html.classList.add(lightModeClass);
+  switchInput.checked = false;
+  switchLabelText.textContent = "Light";
+}
+
+switchInput.addEventListener("input", function () {
+  html.classList.toggle(lightModeClass);
+  if (html.classList.contains(lightModeClass)) {
+    switchLabelText.textContent = "Light";
+    localStorage.setItem("dark-mode", "false");
+  } else {
+    switchLabelText.textContent = "Dark";
+    localStorage.setItem("dark-mode", "true");
+  }
+});
+
+</script>
+</body>
+</html>

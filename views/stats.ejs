@@ -1,0 +1,252 @@
+<html>
+  <head>
+    <style media="screen">
+      body {
+      background-color: #000000;
+      opacity: 0.6;
+      }
+
+      .parent:hover > div {
+        opacity: 0.5;
+      }
+
+
+    </style>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+
+      // Load Charts and the corechart package.
+      google.charts.load('current', {'packages':['corechart']});
+
+      // Draw the pie chart  when Charts is loaded.
+      google.charts.setOnLoadCallback(drawSarahChart);
+
+      // Draw the pie chart   when Charts is loaded.
+      google.charts.setOnLoadCallback(drawAnthonyChart);
+
+      // Draw the pie chart  when Charts is loaded.
+      google.charts.setOnLoadCallback(drawAnthonyChart1);
+
+      // Draw the pie chart   when Charts is loaded.
+      google.charts.setOnLoadCallback(drawAnthonyChart2);
+
+      // next row
+      // Draw the pie chart   when Charts is loaded.
+      google.charts.setOnLoadCallback(drawSarahChartX);
+
+      // Draw the pie chart  when Charts is loaded.
+      google.charts.setOnLoadCallback(drawAnthonyChartX);
+
+      // Draw the pie chart   when Charts is loaded.
+      google.charts.setOnLoadCallback(drawAnthonyChart1X);
+
+      // Draw the pie chart   when Charts is loaded.
+      google.charts.setOnLoadCallback(drawAnthonyChart2X);
+
+      // Callback that draws the pie chart  .
+      function drawSarahChart() { // [ 1 ]
+
+        // Create the data table .
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        data.addRows([
+          ['level-1', <%= total1l1.length %>],
+          ['level-2', <%= total1l1.length %>],
+          ['level-3', <%= total1l1.length %>]
+        ]);
+
+        // Set options  .
+        var options = {title:'How Much for Atherosclerosis :',
+                       width:300,
+                       height:265};
+
+        // Instantiate and draw the chart  .
+        var chart = new google.visualization.PieChart(document.getElementById('Sarah_chart_div'));
+        chart.draw(data, options);
+      }
+
+      // Callback that draws the pie chart .
+      function drawAnthonyChart() {  // [ 2 ]
+
+        // Create the data table .
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        data.addRows([
+          ['level-1', <%= total2l1.length %>],
+          ['level-2', <%= total2l2.length %>],
+          ['level-3', <%= total2l3.length %>]
+        ]);
+
+        // Set options  .
+        var options = {title:'How Much for Heart disease :',
+                       width:300,
+                       height:265};
+
+        // Instantiate and draw the chart  .
+        var chart = new google.visualization.PieChart(document.getElementById('Anthony_chart_div'));
+        chart.draw(data, options);
+      }
+
+      // Callback that draws the pie chart  . 1
+      function drawAnthonyChart1() {    // [ 3 ]
+
+        // Create the data table .
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        data.addRows([
+          ['level-1', <%= total3l1.length %>],
+          ['level-2', <%= total3l1.length %>],
+          ['level-3', <%= total3l1.length %>]
+        ]);
+
+        // Set options  .
+        var options = {title:'How Much for Stroke :',
+                       width:300,
+                       height:265};
+
+        // Instantiate and draw the chart  .
+        var chart = new google.visualization.PieChart(document.getElementById('Anthony_chart_div1'));
+        chart.draw(data, options);
+      }
+
+      // Callback that draws the pie chart   2
+      function drawAnthonyChart2() {    // [ 4 ]
+
+        // Create the data table  .
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        data.addRows([
+          ['level-1', <%= total4l1.length %>],
+          ['level-2', <%= total4l1.length %>],
+          ['level-3', <%= total4l1.length %>]
+        ]);
+
+        // Set options  .
+        var options = {title:'How Much for Obesity :',
+                       width:300,
+                       height:265};
+
+        // Instantiate and draw the chart .
+        var chart = new google.visualization.PieChart(document.getElementById('Anthony_chart_div2'));
+        chart.draw(data, options);
+      }
+
+      // next row
+      // Callback that draws the pie chart .
+      function drawSarahChartX() {    // [ 5 ]
+
+        // Create the data table  .
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        data.addRows([
+          ['level-1', <%= total5l1.length %>],
+          ['level-2', <%= total5l1.length %>],
+          ['level-3', <%= total5l1.length %>]
+        ]);
+
+        // Set options .
+        var options = {title:'How Much for Type 2 Diabetes :',
+                       width:300,
+                       height:265};
+
+        // Instantiate and draw the chart  .
+        var chart = new google.visualization.PieChart(document.getElementById('Sarah_chart_divX'));
+        chart.draw(data, options);
+      }
+
+      // Callback that draws the pie chart  .
+      function drawAnthonyChartX() {   // [ 6 ]
+
+        // Create the data table  .
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        data.addRows([
+          ['level-1', <%= total6l1.length %>],
+          ['level-2', <%= total6l1.length %>],
+          ['level-3', <%= total6l1.length %>]
+        ]);
+
+        // Set options .
+        var options = {title:'How Much for Lung Cancer :',
+                       width:300,
+                       height:265};
+
+        // Instantiate and draw the chart for  .
+        var chart = new google.visualization.PieChart(document.getElementById('Anthony_chart_divX'));
+        chart.draw(data, options);
+      }
+
+      // Callback that draws the pie chart  . 1x
+      function drawAnthonyChart1X() {    // [ 7 ]
+
+        // Create the data table  .
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        data.addRows([
+          ['level-1', <%= total7l1.length %>],
+          ['level-2', <%= total7l1.length %>],
+          ['level-3', <%= total7l1.length %>]
+        ]);
+
+        // Set options .
+        var options = {title:'How Much for Asthma :',
+                       width:300,
+                       height:265};
+
+        // Instantiate and draw the chart  a.
+        var chart = new google.visualization.PieChart(document.getElementById('Anthony_chart_div1X'));
+        chart.draw(data, options);
+      }
+
+      // Callback that draws the pie chart . 2x
+      function drawAnthonyChart2X() {     // [ 8 ]
+
+        // Create the data table .
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        data.addRows([
+          ['level-1', <%= total8l1.length %>],
+          ['level-2', <%= total8l1.length %>],
+          ['level-3', <%= total8l1.length %>]
+        ]);
+
+        // Set options  .
+        var options = {title:'How Much for Blindness :',
+                       width:300,
+                       height:265};
+
+        // Instantiate and draw the chart  .
+        var chart = new google.visualization.PieChart(document.getElementById('Anthony_chart_div2X'));
+        chart.draw(data, options);
+      }
+
+    </script>
+  </head>
+  <body class="parent">
+    <!--Table and divs that hold the pie charts-->
+  <header><center><i><font size = "6" face = "verdana" color = "white">Which and how many contains a specific level. </font></i></center></header>
+<br>
+    <table class="columns" style="width: 100%; background-color: #fff; color: #000;">
+      <tr>
+        <td><div id="Sarah_chart_div" style="border: 1px solid #ccc"></div></td>
+        <td><div id="Anthony_chart_div" style="border: 1px solid #ccc"></div></td>
+        <td><div id="Anthony_chart_div1" style="border: 1px solid #ccc"></div></td>
+        <td><div id="Anthony_chart_div2" style="border: 1px solid #ccc"></div></td>
+      </tr>
+      <tr>
+        <td><div id="Sarah_chart_divX" style="border: 1px solid #ccc"></div></td>
+        <td><div id="Anthony_chart_divX" style="border: 1px solid #ccc"></div></td>
+        <td><div id="Anthony_chart_div1X" style="border: 1px solid #ccc"></div></td>
+        <td><div id="Anthony_chart_div2X" style="border: 1px solid #ccc"></div></td>
+      </tr>
+    </table>
+  </body>
+</html>

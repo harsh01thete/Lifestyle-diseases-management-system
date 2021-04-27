@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+  <head>
+    <meta charset="utf-8">
+    <title>Appointments</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="/css/pageCSS.css" href="text/css">
+    <!-- <link rel="stylesheet" href="C:\Users\hp\Desktop\Harsh_files\bootstrap.min.css">
+    <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+  </head>
+
+  <body>
+<header><center><i><font size = "6" face = "verdana" color = "white">Appointments</font></i></center></header>
+    <%  for ( let i=0 ; i<newListItems.length ; i++ ) { %>
+      <!-- <h1>Appointment</h1> -->
+      <header><center><i><font size = "6" face = "verdana" color = "white">User: <%= i+1 %></font></i></center></header>
+      <div class="container emp-profile">
+        <div class="row">
+          <!-- <div class="col-4"><h3><%= newListItems[i].subC %></h3> <h6><%= newListItems[i].date %></h6></div> -->
+          <!-- <div class="col-2"><h6><%= newListItems[i].date %></h6></div> -->
+        </div>
+              <p><span style="font-size: 40px;"><%= newListItems[i].subC %></span> <span style="font-size: 12px;"><%= newListItems[i].date %></span></p>
+              <p><%= "Name: " + newListItems[i].nameC %></p>
+              <p><%= "Email: " + newListItems[i].emailC %></p>
+              <p><%= "Disease: " + newListItems[i].diseaseC %></p>
+
+
+              <div class="form-check">
+                <form class="" action="/appointment" method="post">
+                  <input class="form-check-input" type="radio" value = "<%= newListItems[i].emailC %>" name="remove" id="flexRadioDefault1">
+                  <button class="btn-sm btn btn-primary" type="submit" name="button">Remove</button>
+                </form>
+              </div>
+<br>
+              <!-- <div class="">
+              <form class="" action="/appointment" method="post">
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" placeholder="Reply" aria-describedby="basic-addon2">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button">Send</button>
+                  </div>
+                </div>
+              </form>
+              </div> -->
+
+              <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+
+
+
+                <form class="" action="/Home1" method="get">
+                  <button class="btn btn-primary" type="submit">Back</button>
+                </form>
+              </div>
+      </div>
+
+      <!-- <header>
+        <center><i><font size = "6" face = "verdana" color = "white">
+          <div class="d-grid gap-2 col-6 mx-auto">
+            <button class="btn btn-primary" type="button">Back</button>
+          </div>
+        </font></i></center>
+      </header> -->
+
+
+    <%  } %>
+
+
+
+  </body>
+
+</html>

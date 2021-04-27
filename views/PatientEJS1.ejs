@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>User's profile</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="/css/pageCSS.css" href="text/css">
+    <!-- <link rel="stylesheet" href="/css/bootstrap.min.css" href="text/css"> -->
+    <!-- <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+  </head>
+
+  <body>
+    <div class="container emp-profile">
+            <!-- <form method="post"> -->
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-img">
+                            <img src="/logo.PNG" alt=""/>
+                            <!-- <div class="file btn btn-lg btn-primary">
+                                Change Photo
+                                <input type="file" name="file"/>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="profile-head">
+                                    <h5>
+                                        <%= newListItems[0].f_name + " " + newListItems[0].l_name %>
+                                    </h5>
+                                    <h6>
+                                        <%= title %>
+                                    </h6>
+                                    <p class="proile-rating"><span>Healthy Life is the first requistic of happiness.</span></p>
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+                                </li>
+                                <!-- <li class="nav-item">
+                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Timeline</a>
+                                </li> -->
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- <div class="col-md-2">
+                        <input type="button" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
+                        <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Logout"/>
+                    </div> -->
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-work">
+                            <h5>Tips</h5>
+                            <a href="https://www.health.com/">Health.com</a><br/>
+                            <a href="https://gainfitness.com/">Gain Fitness</a><br/>
+                            <a href="https://www.who.int/philippines/news/feature-stories/detail/20-health-tips-for-2020">Healthy food- WHO</a><br/>
+                            <a href="http://health.nih.gov/">National Institue of Health</a><br/>
+                            <a href="https://www.drugs.com/">Drugs Advice</a><br/>
+                            <a href="https://medlineplus.gov/">MedlinePlus</a><br/>
+                            <a href="https://www.heart.org/en/health-topics">HeartHub</a><br/>
+                            <!-- <p>SKILLS</p>
+                            <a href="">Web Designer</a><br/>
+                            <a href="">Web Developer</a><br/>
+                            <a href="">WordPress</a><br/>
+                            <a href="">WooCommerce</a><br/>
+                            <a href="">PHP, .Net</a><br/> -->
+
+                            <br/>
+                            <!-- <form class="" action="/loginUser" method="post">
+                              <button type="submit" class="btn btn-primary; profile-edit-btn" name="button">logout</button>
+                            </form> -->
+
+                            <!-- <form class="" action="/appo3" method="post">
+                              <button class="btn btn-primary; profile-edit-btn" type="submit" name="button">Appointment</button>
+                            </form> -->
+                            <br/>
+                            <br><br><br>
+                            <form class="" action="/loginUser" method="post">
+                              <button class="btn btn-primary; profile-edit-btn" type="submit" name="button">Logout</button>
+                            </form>
+
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="tab-content profile-tab" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>User Id</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><%= newListItems[0].e_mail %></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Name</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><%= newListItems[0].f_name + " " + newListItems[0].l_name %></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Email</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><%= newListItems[0].e_mail %></p>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Phone</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><%= newListItems[0].p_num %></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Address</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><%= newListItems[0].c_add %></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Age</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><%= newListItems[0].age %></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Gender</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><%= newListItems[0].gender %></p>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Height</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><%= newListItems[0].height + " cm" %></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Weight</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><%= newListItems[0].weight + " Kg" %></p>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Disease</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><%= newListItems[0].disease %></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Disease Level</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><%= newListItems[0].level %></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Oxygen Level</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><%= newListItems[0].oxygen %> %</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Blood Pressure</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><%= newListItems[0].blood %> mmHg</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Heart Rate</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><%= newListItems[0].heart %> BPM</p>
+                                            </div>
+                                        </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            <!-- </form> -->
+        </div>
+
+        <footer><center><i><font size = "2" face = "verdana" color = "white">
+          Contact Us on : 70239 98153 | 93581 78440 | 90796 78946 | 97635 16264 <br>
+          <p>Or Mail at : <a class="text-white bg-dark" href="mailto:iit2019125@iiita.ac.in">iit2019125@iiita.ac.in</a></p>
+         </font></i></center></footer>
+
+  </body>
+
+</html>
