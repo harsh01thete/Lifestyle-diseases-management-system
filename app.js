@@ -34,8 +34,8 @@ app.use(passport.session());
 
 // ---- database
 // mongodb+srv://admin-aakash:<password>@healife.rl7lm.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
-mongoose.connect("mongodb://localhost:27017/loginDB", {useNewUrlParser: true, useUnifiedTopology: true});
-// mongoose.connect("mongodb+srv://admin-aakash:aks2000@healife.rl7lm.mongodb.net/loginDB", {useNewUrlParser: true, useUnifiedTopology: true});
+// mongoose.connect("mongodb://localhost:27017/loginDB", {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect("mongodb+srv://admin-aakash:aks2000@healife.rl7lm.mongodb.net/loginDB", {useNewUrlParser: true, useUnifiedTopology: true});
 
 mongoose.set("useCreateIndex", true);
 
