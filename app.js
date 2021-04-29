@@ -34,8 +34,8 @@ app.use(passport.session());
 
 // ---- database
 // mongodb+srv://admin-aakash:<password>@healife.rl7lm.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
-// mongoose.connect("mongodb://localhost:27017/loginDB", {useNewUrlParser: true, useUnifiedTopology: true});
-mongoose.connect("mongodb+srv://admin-aakash:aks2000@healife.rl7lm.mongodb.net/loginDB", {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect("mongodb://localhost:27017/loginDB", {useNewUrlParser: true, useUnifiedTopology: true});
+// mongoose.connect("mongodb+srv://admin-aakash:aks2000@healife.rl7lm.mongodb.net/loginDB", {useNewUrlParser: true, useUnifiedTopology: true});
 
 mongoose.set("useCreateIndex", true);
 
@@ -452,45 +452,21 @@ app.post("/loginUser", function(req, res, next){
 
 });
 
-// logout for user
-app.get("/logout", function(req, res){
-  if(req.isAuthenticated())
-  {
-    console.log("ha, hua to h logout");
-    req.logout();
-    res.redirect("/UserProfile");
-  }
-  else
-  {
-    res.redirect("/loginUser");
-  }
-});
+// logout for user abd it is working properly
+// app.get("/logout", function(req, res){
+//   if(req.isAuthenticated())
+//   {
+//     console.log("ha, hua to h logout");
+//     req.logout();
+//     res.redirect("/UserProfile");
+//   }
+//   else
+//   {
+//     res.redirect("/loginUser");
+//   }
+// });
 
-// logout for admin
-app.get("/logout1", function(req, res){
-  if(req.isAuthenticated())
-  {
-    console.log("ha, hua to h admin logout");
-    req.logout();
-    res.redirect("/Home1");
-  }
-  else
-  {
-    res.redirect("/login");
-  }
-});
 
-// check security and authentication
-app.get("/secrets", function(req, res){
-  if (req.isAuthenticated()) {
-    console.log("abhi tak to logout nahi hua h");
-    // res.render("PatientEJS1");
-    res.redirect("/UserProfile");
-  } else {
-    console.log("ok, logout ho chuka hai");
-    res.redirect("/loginUser");
-  }
-});
 
 // user watch this Page
 app.get("/UserProfile", function(req, res){
@@ -527,7 +503,37 @@ app.get("/UserProfile", function(req, res){
 
 });
 
+// user logout from post req
+app.post("/UserProfile", function(req, res){
+  if(req.isAuthenticated())
+  {
+    console.log("ha, hua to h user logout");
+    req.logOut();
+    res.redirect("/UserProfile");
+  }
+  else
+  {
+    res.redirect("/loginUser");
+  }
+});
 
+
+// print all users on /users using .ejs file
+
+app.get("/users", function(req, res){
+  if (req.isAuthenticated()) {
+  Profile.find({}, function(err, foundItems){
+    if(foundItems.length === 0) {
+      res.redirect("/users");
+    } else {
+      res.render("userList", {title: "All users", newListItems: foundItems});
+    }
+    // console.log(foundItems);
+  });
+} else {
+  res.redirect("/login");
+}
+});
 
 // admin click on full detail button and watch this page
 
@@ -570,30 +576,6 @@ app.post("/users", function(req, res){
 
 });
 
-
-
-// Home page
-
-app.get("/Home", function(req, res){
-  res.sendFile(__dirname + "/Admin_landing_page.html");
-});
-
-// print all users on /users using .ejs file
-
-app.get("/users", function(req, res){
-  if (req.isAuthenticated()) {
-  Profile.find({}, function(err, foundItems){
-    if(foundItems.length === 0) {
-      res.redirect("/users");
-    } else {
-      res.render("userList", {title: "All users", newListItems: foundItems});
-    }
-    // console.log(foundItems);
-  });
-} else {
-  res.redirect("/login");
-}
-});
 
 // numeric stats part
 app.get("/Home1", function(req, res){
@@ -654,7 +636,22 @@ app.get("/Home1", function(req, res){
   // res.render("stats", {total1: found1, total2: found2});
 });
 
-
+// trying to logout using post req from Home1
+// and its worked properly ;)
+app.post("/Home1", function(req, res){
+  // if (req.body.gaya === "LogA") {
+  if(req.isAuthenticated())
+  {
+    console.log("ha, hua to h admin logout");
+    req.logout();
+    res.redirect("/Home1");
+  }
+  else
+  {
+    res.redirect("/login");
+  }
+// }
+});
 
 // rough graph
 app.get("/stats", function(req, res){
@@ -821,22 +818,68 @@ app.post("/up", function(req, res){
 });
 
 
-//rough work
-const date = new Date();
-app.get("/rough", function(req, res){
+//report as a conclusion for the project
+// const date = new Date();
+app.get("/report", function(req, res){
   // res.render("roughW", {item: date});
-  console.log(moment().format('Do MMMM, YYYY'));
-  res.render('roughW', { moment: moment });
+  // console.log(moment().format('Do MMMM, YYYY'));
+  var x = 0;
+  // console.log(x*x);
+
+  Profile.find({age: { $gte: 0, $lte: 10}}, function(err, f1){
+    Profile.find({age: { $gte: 11, $lte: 20}}, function(err, f2){
+      Profile.find({age: { $gte: 21, $lte: 30}}, function(err, f3){
+        Profile.find({age: { $gte: 31, $lte: 40}}, function(err, f4){
+          Profile.find({age: { $gte: 41, $lte: 50}}, function(err, f5){
+            Profile.find({age: { $gte: 51, $lte: 60}}, function(err, f6){
+              Profile.find({age: { $gte: 61, $lte: 70}}, function(err, f7){
+                Profile.find({age: { $gte: 71, $lte: 80}}, function(err, f8){
+                  Profile.find({age: { $gte: 81, $lte: 90}}, function(err, f9){
+                    Profile.find({age: { $gte: 91, $lte: 100}}, function(err, f10){
+
+                      x = (f1.length)*5 + (f2.length)*15 + (f3.length)*25 + (f4.length)*35 + (f5.length)*45;
+                      x = x + (f6.length)*55 + (f7.length)*65 + (f8.length)*75 + (f9.length)*85 + (f10.length)*95;
+                      var n = f1.length + f2.length + f3.length + f4.length + f5.length + f6.length + f7.length +
+                      f8.length + f9.length + f10.length;
+
+                      var x_ = x/n; // mean
+
+                      var y = f1.length*(5 - x_)*(5 - x_) + f2.length*(15 - x_)*(15 - x_) + f3.length*(25 - x_)*(25 - x_) + f4.length*(35 - x_)*(35 - x_) + f5.length*(45 - x_)*(45 - x_) ;
+                      y = y + f6.length*(55 - x_)*(55 - x_) + f7.length*(65 - x_)*(65 - x_) + f8.length*(75 - x_)*(75 - x_) + f9.length*(85 - x_)*(85 - x_) + f10.length*(95 - x_)*(95 - x_);
+                      var sigma2 = y/n; // variance
+
+                      var y1 = (Math.sqrt(sigma2));
+
+                      console.log(x_);
+                      console.log(sigma2);
+                      console.log(y1);
+
+                      res.render("report", {
+                        mean: x_, variance: sigma2, sd: y1,
+                      item1: f1, item2: f2, item3: f3, item4: f4, item5: f5,
+                      item6: f6, item7: f7, item8: f8, item9: f9, item10: f10});
+                    });
+                  });
+                });
+              });
+            });
+          });
+        });
+      });
+    });
+  });
+
+  // res.render('roughW');
   // res.sendFile(__dirname + "/RoughWork1.html");
 
 });
-
-app.post("/rough", function(req, res){
-  // console.log(req.body.name);
-
-  res.redirect("/rough", { moment: moment });
-
-});
+//
+// app.post("/rough", function(req, res){
+//   // console.log(req.body.name);
+//
+//   res.redirect("/rough", { moment: moment });
+//
+// });
 
 // ending
 

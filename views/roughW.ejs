@@ -2,43 +2,73 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>rough ejs</title>
-    <link rel="stylesheet" type="text/css" href="/font-awesome.min.css">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="/css/pageCSS.css" href="text/css">
+    <title>Mean, Variance</title>
   </head>
+
   <body>
-    <h1><%= moment().format('Do MMMM, YYYY'); %></h1>
+    <header><center><i><font size = "6" face = "verdana" color = "white">Report </font></i></center></header>
+    <div class="container emp-profile">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">Age Interval</th>
+          <th scope="col">Frequency of users</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">0-10</th>
+          <td><%= item1.length %></td>
+        </tr>
+        <tr>
+          <th scope="row">10-20</th>
+          <td><%= item2.length %></td>
+        </tr>
+        <tr>
+          <th scope="row">20-30</th>
+          <td><%= item3.length %></td>
+        </tr>
+        <tr>
+          <th scope="row">30-40</th>
+          <td><%= item4.length %></td>
+        </tr>
+        <tr>
+          <th scope="row">40-50</th>
+          <td><%= item5.length %></td>
+        </tr>
+        <tr>
+          <th scope="row">50-60</th>
+          <td><%= item6.length %></td>
+        </tr>
+        <tr>
+          <th scope="row">60-70</th>
+          <td><%= item7.length %></td>
+        </tr>
+        <tr>
+          <th scope="row">70-80</th>
+          <td><%= item8.length %></td>
+        </tr>
+        <tr>
+          <th scope="row">80-90</th>
+          <td><%= item9.length %></td>
+        </tr>
+        <tr>
+          <th scope="row">90-100</th>
+          <td><%= item10.length %></td>
+        </tr>
+      </tbody>
+    </table>
+
     <div class="">
-
-      <!-- <form class="" action="/rough" method="post">
-        <input type="text" name="name" value="" pattern="[a-z]">
-        <button type="submit" name="button">save</button>
-      </form> -->
-
-
-
-      <!-- <script type="text/javascript">
-      function success() {
-       if(document.getElementById("textsend").value==="") {
-                document.getElementById('button').disabled = true;
-            } else {
-                document.getElementById('button').disabled = false;
-            }
-        }
-      </script> -->
-
-      <!-- <div style="clear: both">
-          <h2 style="float: left; vertical-align: bottom;">Heading 1</h2>
-          <h3 style="float: left; vertical-align: bottom;">Heading 2</h3>
-      </div> -->
-
-      <!-- <div class="">
-        <h2 style="float: left;">Employee: Employee Name</h2>
-        <h5 style="float: left; text-align: bottom;"><sub>Employee: Employee Name</sub></h5>
-      </div> -->
-
-      <p>I am <span style="font-size: 100px;"> aakash </span> bishnoi</p>
-
+      <p>From the above data, we calculate Mean, Variance and Standard Deviation(S.D.). </p>
+      <p><strong>Mean : </strong><%= mean %></p>
+      <p><strong>Variance : </strong><%= variance %></p>
+      <p><strong>Standard Deviation(S.D.) : </strong><%= sd %></p>
     </div>
+
+  </div>
 
   </body>
 </html>
