@@ -75,6 +75,7 @@ passport.deserializeUser(function(id, done) {
 
 // tmp code
 var suEmail = "";
+var adID = "";
 // schema create
 
 const profileSchema = {
@@ -98,7 +99,7 @@ const Profile = mongoose.model("Profile", profileSchema);
 
 
 app.get("/newProfile", function(req, res){
-  if (req.isAuthenticated()) {
+  if (req.isAuthenticated() && adID != "") {
 
   res.sendFile(__dirname + "/Add_new_user.html");
 } else {
@@ -204,7 +205,7 @@ app.post("/first", function(req, res){
 // show appointment
 
 app.get("/appointment", function(req, res){
-if (req.isAuthenticated()) {
+if (req.isAuthenticated() && adID != "") {
 
   Appointment.find({}, function(err, foundItems){
     if(foundItems.length === 0) {
@@ -237,7 +238,7 @@ app.post("/appointment", function(req, res){
 
 app.get("/", function(req, res){
   // res.sendFile(__dirname + "/signup.html");
-if (req.isAuthenticated()) {
+if (req.isAuthenticated() && adID != "") {
   res.render("register");
 } else {
   res.redirect("/login");
@@ -354,7 +355,7 @@ const adminSchema = {
 const Name = mongoose.model("Name", adminSchema);
 
 app.get("/newA", function(req, res){
-if (req.isAuthenticated()) {
+if (req.isAuthenticated() && adID != "") {
   res.render("newAdmin");
 } else {
   res.redirect("/login");
@@ -472,7 +473,8 @@ app.post("/loginUser", function(req, res, next){
 app.get("/UserProfile", function(req, res){
   // res.sendFile(__dirname + "/Patient.html");
   console.log(s_email);
-
+  // if (s_email == "" ) console.log("empty");
+  // else console.log("filled");
   // Profile.find({e_mail: s_email}, function(err, check){
   //   if(check.length === 0) {
   //     console.log("No user :(");
@@ -485,7 +487,7 @@ app.get("/UserProfile", function(req, res){
   //   console.log(check);
   // });
 
-  if (req.isAuthenticated()) {
+  if (req.isAuthenticated() && s_email != "") {
     Profile.find({e_mail: s_email}, function(err, check){
       if(check.length === 0) {
         console.log("No user :(");
@@ -521,7 +523,7 @@ app.post("/UserProfile", function(req, res){
 // print all users on /users using .ejs file
 
 app.get("/users", function(req, res){
-  if (req.isAuthenticated()) {
+  if (req.isAuthenticated() && adID != "") {
   Profile.find({}, function(err, foundItems){
     if(foundItems.length === 0) {
       res.redirect("/users");
@@ -579,7 +581,7 @@ app.post("/users", function(req, res){
 
 // numeric stats part
 app.get("/Home1", function(req, res){
-  if (req.isAuthenticated()) {
+  if (req.isAuthenticated() && adID != "") {
   Profile.find({gender: "Male"}, function(err, found1){
     Profile.find({gender: "Female"}, function(err, found2){
       Profile.find({gender: "Other"}, function(err, found3){
@@ -603,10 +605,15 @@ app.get("/Home1", function(req, res){
                                       Profile.find({age: { $gte: 81, $lte: 90}}, function(err, f9){
                                         Profile.find({age: { $gte: 91, $lte: 100}}, function(err, f10){
                                           Name.find({idA: adID}, function(err, ad){
-                                            res.render("adminPage", {total1: found1, total2: found2, total3: found3,
-                                            ill1: d1, ill2: d2, ill3: d3, ill4: d4, ill5: d5, ill6: d6, ill7: d7, ill8: d8,
-                                            item1: f1, item2: f2, item3: f3, item4: f4, item5: f5, item6: f6, item7: f7, item8: f8, item9: f9, item10: f10,
-                                            ad1: ad});
+                                            if (ad.length === 0) {
+                                              res.redirect("/login");
+                                            } else {
+                                              res.render("adminPage", {total1: found1, total2: found2, total3: found3,
+                                              ill1: d1, ill2: d2, ill3: d3, ill4: d4, ill5: d5, ill6: d6, ill7: d7, ill8: d8,
+                                              item1: f1, item2: f2, item3: f3, item4: f4, item5: f5, item6: f6, item7: f7, item8: f8, item9: f9, item10: f10,
+                                              ad1: ad});
+                                            }
+                                            // adID = "";
                                           });
                                         });
                                       });
@@ -648,6 +655,7 @@ app.post("/Home1", function(req, res){
   }
   else
   {
+    adID = "";
     res.redirect("/login");
   }
 // }
@@ -655,7 +663,7 @@ app.post("/Home1", function(req, res){
 
 // rough graph
 app.get("/stats", function(req, res){
-  if (req.isAuthenticated()) {
+  if (req.isAuthenticated() && adID != "") {
   Profile.find({disease: "Atherosclerosis", level: "level1"}, function(err, d1l1){
     Profile.find({disease: "Atherosclerosis", level: "level2"}, function(err, d1l2){
       Profile.find({disease: "Atherosclerosis", level: "level3"}, function(err, d1l3){
@@ -752,7 +760,7 @@ app.get("/stats", function(req, res){
 // update trial successful
 app.get("/up", function(req, res){
   // res.sendFile(__dirname + "/RoughWork1.html");
-if (req.isAuthenticated()) {
+if (req.isAuthenticated() && adID != "") {
   res.render("update", {item: ""});
 } else {
   res.redirect("/login");
@@ -823,6 +831,8 @@ app.post("/up", function(req, res){
 app.get("/report", function(req, res){
   // res.render("roughW", {item: date});
   // console.log(moment().format('Do MMMM, YYYY'));
+  if (req.isAuthenticated() && adID != "") {
+
   var x = 0;
   // console.log(x*x);
 
@@ -868,18 +878,20 @@ app.get("/report", function(req, res){
       });
     });
   });
-
-  // res.render('roughW');
-  // res.sendFile(__dirname + "/RoughWork1.html");
+} else {
+  res.redirect("/login");
+}
 
 });
 //
-// app.post("/rough", function(req, res){
-//   // console.log(req.body.name);
-//
-//   res.redirect("/rough", { moment: moment });
-//
-// });
+
+var xyz = "aaa";
+app.get("/rough", function(req, res){
+  // console.log(req.body.name);
+  if( xyz != "a" ) res.render("roughW", { xyz: "Today"});
+  else res.render("roughW", { xyz: "Tomorrow"});
+  // console.log("Hii");
+});
 
 // ending
 
