@@ -13,6 +13,8 @@ var moment = require('moment'); // for date
 const session = require("express-session");
 const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
+const crypto = require('crypto');
+var async = require('async');
 //
 
 const app = express();
@@ -42,7 +44,9 @@ mongoose.set("useCreateIndex", true);
 // A document or model
 const personSchema = new mongoose.Schema ({
   username: String,
-  password: String
+  password: String,
+  resetPasswordToken: String,
+  resetPasswordExpires: Date
 });
 
 personSchema.plugin(passportLocalMongoose);
@@ -256,24 +260,20 @@ app.post("/", function(req, res){
 // send email and pass to users
 // var transporter = nodemailer.createTransport({
 //   service: 'gmail',
-//   // host: 'smtp.gmail.com',
-//   // port: 587,
-//   // secure: false,
 //   auth: {
 //     user: 'ak4sh02@gmail.com',
 //     pass: 'akku2021'
 //   }
 // });
-//
+
 // var mailOptions = {
 //   from: 'ak4sh02@gmail.com',
 //   to: req.body.username,
 //   subject: 'Registration Completed',
 //   text: 'Your registaration is completed. \nAnd this is your\nMailID: ' + req.body.username + '\nPassword: ' + req.body.password1 + '\nThank you.'
-//   // attachDataUrls: true
 //
 // };
-//
+
 // transporter.sendMail(mailOptions, function(error, info){
 //   if (error) {
 //     console.log(error);
@@ -885,13 +885,160 @@ app.get("/report", function(req, res){
 });
 //
 
-var xyz = "aaa";
+// reset password pasrt start from here
+// uffff.. finaly i reser password :)
+
 app.get("/rough", function(req, res){
-  // console.log(req.body.name);
-  if( xyz != "a" ) res.render("roughW", { xyz: "Today"});
-  else res.render("roughW", { xyz: "Tomorrow"});
-  // console.log("Hii");
+
+  res.render('roughW');
 });
+
+app.get('/reset2/:token', function(req, res) {
+  Person.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
+    if (!user) {
+      // req.flash('error', 'Password reset token is invalid or has expired.');
+      console.log('Password reset token is invalid or has expired.');
+      return res.redirect('/rough');
+    }
+    res.render('rpass');
+  });
+});
+
+app.post('/rough', function(req, res, next) {
+  async.waterfall([
+    function(done) {
+      crypto.randomBytes(20, function(err, buf) {
+        var token = buf.toString('hex');
+        done(err, token);
+      });
+    },
+    function(token, done) {
+      Person.findOne({ username: req.body.username }, function(err, user) {
+        if (!user) {
+          // req.flash('error', 'No account with that email address exists.');
+          console.log('No account with that email address exists.');
+          return res.redirect('/rough');
+        }
+
+        user.resetPasswordToken = token;
+        user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+
+        user.save(function(err) {
+          done(err, token, user);
+        });
+      });
+    },
+    function(token, user, done) {
+      var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: 'ak4sh02@gmail.com',
+          pass: 'akku2021'
+        }
+      });
+
+      var mailOptions = {
+        from: 'ak4sh02@gmail.com',
+        to: req.body.username,
+        subject: 'Reset Password',
+        text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+          'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+          'http://' + req.headers.host + '/reset2/' + token + '\n\n' +
+          'The link will expired in one hour.' +
+          'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+      };
+
+      transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+          res.redirect('/first');
+        }
+      });
+    }
+
+  ], function(err) {
+    if (err) return next(err);
+    res.redirect('/rough');
+  });
+});
+
+app.post('/reset2/:token', function(req, res) {
+
+  console.log(req.body.username);
+  console.log(req.body.password);
+
+  Person.findOne({username:req.body.username},function(err,user){
+    // var user = new Person();
+    if (err) { console.log(err); }
+    else {
+      console.log(user);
+
+        user.setPassword(req.body.password,function(err,user){
+          if(err) {
+            console.log(err);
+          }
+          else{
+            user.save(function(err){
+            if(err) {
+              console.log(err);
+            }
+            else{
+                Person.findOne({username:req.body.username},function(err,check){
+                  if(err) {
+                    console.log(err);
+                  }
+                  else{
+                    console.log(check);
+                    Person.updateOne({username:req.body.username},{
+                      resetPasswordToken: undefined,
+                      resetPasswordExpires: undefined
+                    },function(err){
+                      if(err)
+                      console.log(err);
+                      else{
+                        console.log("done, password changed");
+
+                        var transporter = nodemailer.createTransport({
+                          service: 'gmail',
+                          auth: {
+                            user: 'ak4sh02@gmail.com',
+                            pass: 'akku2021'
+                          }
+                        });
+
+                        var mailOptions = {
+                          from: 'ak4sh02@gmail.com',
+                          to: req.body.username,
+                          subject: 'Password changed successfully !',
+                          text: 'Hello,\n\n' +
+                            'This is a confirmation that the password for your account ' + req.body.username + ' has just been changed.\n'
+                        };
+
+                        transporter.sendMail(mailOptions, function(error, info){
+                          if (error) {
+                            console.log(error);
+                          } else {
+                            console.log('Email sent: ' + info.response);
+                          }
+                        });
+
+                        res.redirect("/loginUser");
+                      }
+                    })
+                  }
+                })
+              }
+            })
+          }
+        });
+      }
+   });
+
+});
+
+// this is the section for changing password....  So, don't touch this part... else...
 
 // ending
 

@@ -4,11 +4,52 @@
     <meta charset="utf-8">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link rel="stylesheet" href="/css/pageCSS.css" href="text/css">
-    <title>Rough</title>
+    <!-- <style>
+      .alert {
+        padding: 20px;
+        background-color: #f44336;
+        color: white;
+      }
+
+      .closebtn {
+        margin-left: 15px;
+        color: white;
+        font-weight: bold;
+        float: right;
+        font-size: 22px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      .closebtn:hover {
+        color: black;
+      }
+      </style> -->
+    <title>Reset 1</title>
   </head>
   <body>
 
-    <h1><%= xyz %></h1>
+    <!-- <header>
+      <div class="alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        <strong>Danger!</strong> Indicates a dangerous or potentially negative action.
+      </div>
+    </header> -->
+
+    <div class="container emp-profile">
+      <h1>Forgot Password</h1>
+      <hr>
+
+      <form class="" action="/rough" method="post">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Email address</label>
+          <input type="text" class="form-control" name="username" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+        </div>
+        <button class="btn btn-primary" type="submit" name="button">Send</button>
+      </form>
+
+    </div>
 
   </body>
 </html>
