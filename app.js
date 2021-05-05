@@ -258,29 +258,29 @@ app.post("/", function(req, res){
   Person.register(new Person({username: req.body.username}), req.body.password1, function(err, person){
 
 // send email and pass to users
-// var transporter = nodemailer.createTransport({
-//   service: 'gmail',
-//   auth: {
-//     user: 'ak4sh02@gmail.com',
-//     pass: 'akku2021'
-//   }
-// });
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'ak4sh02@gmail.com',
+    pass: 'akku2021'
+  }
+});
 
-// var mailOptions = {
-//   from: 'ak4sh02@gmail.com',
-//   to: req.body.username,
-//   subject: 'Registration Completed',
-//   text: 'Your registaration is completed. \nAnd this is your\nMailID: ' + req.body.username + '\nPassword: ' + req.body.password1 + '\nVisit on https://healife-2021.herokuapp.com/first' + '\nThank you.'
-//
-// };
+var mailOptions = {
+  from: 'ak4sh02@gmail.com',
+  to: req.body.username,
+  subject: 'Registration Completed',
+  text: 'Your registaration is completed. \nAnd this is your\nMailID: ' + req.body.username + '\nPassword: ' + req.body.password1 + '\nVisit on https://healife-2021.herokuapp.com/first' + '\nThank you.'
 
-// transporter.sendMail(mailOptions, function(error, info){
-//   if (error) {
-//     console.log(error);
-//   } else {
-//     console.log('Email sent: ' + info.response);
-//   }
-// });
+};
+
+transporter.sendMail(mailOptions, function(error, info){
+  if (error) {
+    console.log(error);
+  } else {
+    console.log('Email sent: ' + info.response);
+  }
+});
 
 
 // mail sent
