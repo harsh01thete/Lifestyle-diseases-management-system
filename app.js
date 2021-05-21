@@ -262,7 +262,7 @@ var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: 'ak4sh02@gmail.com',
-    pass: 'akku2021'
+    pass: 'aksaksaks292929'
   }
 });
 
@@ -371,7 +371,7 @@ app.post("/newA", function(req, res){
       service: 'gmail',
       auth: {
         user: 'ak4sh02@gmail.com',
-        pass: 'akku2021'
+        pass: 'aksaksaks292929'
       }
     });
 
@@ -961,7 +961,7 @@ app.post('/rough', function(req, res, next) {
         service: 'gmail',
         auth: {
           user: 'ak4sh02@gmail.com',
-          pass: 'akku2021'
+          pass: 'aksaksaks292929'
         }
       });
 
@@ -1032,7 +1032,7 @@ app.post('/reset2/:token', function(req, res) {
                           service: 'gmail',
                           auth: {
                             user: 'ak4sh02@gmail.com',
-                            pass: 'akku2021'
+                            pass: 'aksaksaks292929'
                           }
                         });
 
