@@ -38,7 +38,7 @@ app.use(flash()); //pop
 // ---- database
 // mongodb+srv://admin-aakash:<password>@healife.rl7lm.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
 // mongoose.connect("mongodb://localhost:27017/loginDB", {useNewUrlParser: true, useUnifiedTopology: true});
-mongoose.connect("mongodb+srv://admin-aakash:aks2000@healife.rl7lm.mongodb.net/loginDB", {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect("mongodb+srv://admin-****@healife.rl7lm.mongodb.net/loginDB", {useNewUrlParser: true, useUnifiedTopology: true});
 
 mongoose.set("useCreateIndex", true);
 
@@ -274,13 +274,13 @@ app.post("/", function(req, res){
             var transporter = nodemailer.createTransport({
               service: 'gmail',
               auth: {
-                user: 'ak4sh02@gmail.com',
-                pass: 'aksaksaks292929'
+                user: '**@gmail.com',
+                pass: '**'
               }
             });
 
             var mailOptions = {
-              from: 'ak4sh02@gmail.com',
+              from: '**@gmail.com',
               to: req.body.username,
               subject: 'Registration Completed',
               text: 'Your registaration is completed. \nAnd this is your\nMailID: ' + req.body.username + '\nPassword: ' + req.body.password1 + '\nVisit on https://healife-2021.herokuapp.com/first' + '\nThank you.'
@@ -394,13 +394,13 @@ app.post("/newA", function(req, res){
         var transporter = nodemailer.createTransport({
           service: 'gmail',
           auth: {
-            user: 'ak4sh02@gmail.com',
-            pass: 'aksaksaks292929'
+            user: '**@gmail.com',
+            pass: '**'
           }
         });
 
         var mailOptions = {
-          from: 'ak4sh02@gmail.com',
+          from: '**@gmail.com',
           to: req.body.username,
           subject: 'You are assigned as Admin for HeaLife',
           text: 'Welcome' + '\nYour registaration is completed. \nAnd this is your\nMailID: ' + req.body.username + '\nPassword: ' + req.body.password1 + '\nVisit on https://healife-2021.herokuapp.com/first' + '\nThank you.'
@@ -984,13 +984,13 @@ app.post('/rough', function(req, res, next) {
       var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-          user: 'ak4sh02@gmail.com',
-          pass: 'aksaksaks292929'
+          user: '**@gmail.com',
+          pass: '**'
         }
       });
 
       var mailOptions = {
-        from: 'ak4sh02@gmail.com',
+        from: '**@gmail.com',
         to: req.body.username,
         subject: 'Reset Password',
         text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
@@ -1055,13 +1055,13 @@ app.post('/reset2/:token', function(req, res) {
                         var transporter = nodemailer.createTransport({
                           service: 'gmail',
                           auth: {
-                            user: 'ak4sh02@gmail.com',
-                            pass: 'aksaksaks292929'
+                            user: '**@gmail.com',
+                            pass: '**'
                           }
                         });
 
                         var mailOptions = {
-                          from: 'ak4sh02@gmail.com',
+                          from: '**@gmail.com',
                           to: req.body.username,
                           subject: 'Password changed successfully !',
                           text: 'Hello,\n\n' +
