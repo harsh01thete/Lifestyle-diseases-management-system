@@ -194,14 +194,21 @@
             <input type="number" name="age" placeholder="Age" size="100" min="1" max="150" required/>
 
         <div>
-          <!-- <br></br> -->
-          <!-- <label>  </label> -->
+
           <h2>Gender :</h2>
           <label>
-          <input type="radio" value="Male" name="gender"> Male
+          <input type="radio" value="Male" name="gender" required> Male
           <input type="radio" value="Female" name="gender"> Female
           <input type="radio" value="Other" name="gender"> Other
           </label>
+
+          <!-- <form>
+            <h2>Gender : </h2>
+            <input type="radio" value="Male" name="gender" required> Male
+            <input type="radio" value="Female" name="gender"> Female
+            <input type="radio" value="Other" name="gender"> Other
+            <input type="submit">
+          </form> -->
 
         </div>
         <!-- <br></br> -->
@@ -229,7 +236,7 @@
       <!-- <label> <h2>Diseases : </h2></label> -->
       <h2>Diseases :</h2>
         <label>
-        <input type="radio" id="chkNo" value="Atherosclerosis" name="diseases"> Atherosclerosis<br></br>
+        <input type="radio" id="chkNo" value="Atherosclerosis" name="diseases"  required> Atherosclerosis<br></br>
         <input type="radio" id="chkNo" value="Heart disease" name="diseases"> Heart disease<br></br>
         <input type="radio" id="chkNo" value="Stroke" name="diseases"> Stroke<br></br>
         <input type="radio" id="chkNo" value="Obesity" name="diseases"> Obesity<br></br>
@@ -248,7 +255,7 @@
 
       <h2>Disease Level :</h2>
         <label>
-        <input type="radio" value="level1" name="level"> level1
+        <input type="radio" value="level1" name="level"  required> level1
         <input type="radio" value="level2" name="level"> level2
         <input type="radio" value="level3" name="level"> level3
         </label>

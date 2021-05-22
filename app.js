@@ -260,7 +260,8 @@ if (req.isAuthenticated() && adID != "") {
 app.post("/", function(req, res){
 
   Person.find({username: req.body.username}, function(err, check){
-    if(check) {
+    if(check.length > 0) {
+      console.log(check);
       return res.render('register.ejs',{message:"This ID is already exists. So, try another..."});
     } else {
 
@@ -383,7 +384,8 @@ if (req.isAuthenticated() && adID != "") {
 app.post("/newA", function(req, res){
 
   Person.find({username: req.body.username}, function(err, check){
-    if(check) {
+    if(check.length > 0) {
+      console.log(check);
       return res.render('newAdmin.ejs',{message:"This ID is already exists. So, try another..."});
     } else {
       Person.register(new Person({username: req.body.username}), req.body.password1, function(err, member){
