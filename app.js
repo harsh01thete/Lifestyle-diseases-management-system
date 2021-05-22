@@ -14,6 +14,7 @@ const session = require("express-session");
 const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const crypto = require('crypto');
+var flash = require('express-flash'); //pop
 var async = require('async');
 //
 
@@ -32,7 +33,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-//p
+app.use(flash()); //pop
 
 // ---- database
 // mongodb+srv://admin-aakash:<password>@healife.rl7lm.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
@@ -67,6 +68,13 @@ passport.deserializeUser(function(id, done) {
   Person.findById(id, function(err, user) {
     done(err, user);
   });
+});
+
+//for pop messages
+app.use((req,res,next)=>{
+  res.locals.message=req.session.message;
+  delete req.session.message;
+  next();
 });
 
 // app.use((req,res,next)=>{
@@ -251,48 +259,53 @@ if (req.isAuthenticated() && adID != "") {
 
 app.post("/", function(req, res){
 
+  Person.find({username: req.body.username}, function(err, check){
+    if(check) {
+      return res.render('register.ejs',{message:"This ID is already exists. So, try another..."});
+    } else {
 
-  //passport uses here
-  console.log("yaha tak to aa rha h :|");
-  // console.log(req.body.username);
-  Person.register(new Person({username: req.body.username}), req.body.password1, function(err, person){
+        //passport uses here
+        console.log("yaha tak to aa rha h :|");
+        // console.log(req.body.username);
+        Person.register(new Person({username: req.body.username}), req.body.password1, function(err, person){
 
-// send email and pass to users
-var transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: 'ak4sh02@gmail.com',
-    pass: 'aksaksaks292929'
-  }
-});
+            // send email and pass to users
+            var transporter = nodemailer.createTransport({
+              service: 'gmail',
+              auth: {
+                user: 'ak4sh02@gmail.com',
+                pass: 'aksaksaks292929'
+              }
+            });
 
-var mailOptions = {
-  from: 'ak4sh02@gmail.com',
-  to: req.body.username,
-  subject: 'Registration Completed',
-  text: 'Your registaration is completed. \nAnd this is your\nMailID: ' + req.body.username + '\nPassword: ' + req.body.password1 + '\nVisit on https://healife-2021.herokuapp.com/first' + '\nThank you.'
+            var mailOptions = {
+              from: 'ak4sh02@gmail.com',
+              to: req.body.username,
+              subject: 'Registration Completed',
+              text: 'Your registaration is completed. \nAnd this is your\nMailID: ' + req.body.username + '\nPassword: ' + req.body.password1 + '\nVisit on https://healife-2021.herokuapp.com/first' + '\nThank you.'
 
-};
+            };
 
-transporter.sendMail(mailOptions, function(error, info){
-  if (error) {
-    console.log(error);
-  } else {
-    console.log('Email sent: ' + info.response);
-  }
-});
-
-
-// mail sent
+            transporter.sendMail(mailOptions, function(error, info){
+              if (error) {
+                console.log(error);
+              } else {
+                console.log('Email sent: ' + info.response);
+              }
+            });
 
 
+            // mail sent
 
-        suEmail = req.body.username;
-        res.redirect("/newProfile");
-    //   });
-    // }
-  });
 
+
+                    suEmail = req.body.username;
+                    res.redirect("/newProfile");
+                //   });
+                // }
+        });
+      }
+    });
 });
 
 // --------- login for admin
@@ -324,14 +337,19 @@ app.post("/login", function(req, res, next){
     if (err) {
       console.log(err);
     } else {
-      // passport.authenticate("local")(req, res, function(){
-      //   res.redirect("/Home");
-      // });
+      //pop msg
+      req.session.message={
+        type:'danger',
+        intro:'Invalid Credentials',
+        message:'Your Id or password is wrong'
+      }
+
       console.log("login successful");
       passport.authenticate("local", function(err, admin, info) {
 
           if (err) return next(err);
-          if (!admin) return res.redirect('/login');
+          if (!admin){ return res.render('login.ejs',{message:"Your email ID or password is wrong."}); }
+           // return res.redirect('/login');
 
           req.logIn(admin, function(err) {
               if (err)  return next(err);
@@ -364,45 +382,54 @@ if (req.isAuthenticated() && adID != "") {
 
 app.post("/newA", function(req, res){
 
-  Person.register(new Person({username: req.body.username}), req.body.password1, function(err, member){
+  Person.find({username: req.body.username}, function(err, check){
+    if(check) {
+      return res.render('newAdmin.ejs',{message:"This ID is already exists. So, try another..."});
+    } else {
+      Person.register(new Person({username: req.body.username}), req.body.password1, function(err, member){
 
-// send email and pass to users
-    var transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: 'ak4sh02@gmail.com',
-        pass: 'aksaksaks292929'
-      }
-    });
+    // send email and pass to users
+        var transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            user: 'ak4sh02@gmail.com',
+            pass: 'aksaksaks292929'
+          }
+        });
 
-    var mailOptions = {
-      from: 'ak4sh02@gmail.com',
-      to: req.body.username,
-      subject: 'You are assigned as Admin for HeaLife',
-      text: 'Welcome' + '\nYour registaration is completed. \nAnd this is your\nMailID: ' + req.body.username + '\nPassword: ' + req.body.password1 + '\nVisit on https://healife-2021.herokuapp.com/first' + '\nThank you.'
+        var mailOptions = {
+          from: 'ak4sh02@gmail.com',
+          to: req.body.username,
+          subject: 'You are assigned as Admin for HeaLife',
+          text: 'Welcome' + '\nYour registaration is completed. \nAnd this is your\nMailID: ' + req.body.username + '\nPassword: ' + req.body.password1 + '\nVisit on https://healife-2021.herokuapp.com/first' + '\nThank you.'
 
-    };
+        };
 
-    transporter.sendMail(mailOptions, function(error, info){
-      if (error) {
-        console.log(error);
-      } else {
-        console.log('Email sent: ' + info.response);
-      }
-    });
+        transporter.sendMail(mailOptions, function(error, info){
+          if (error) {
+            console.log(error);
+          } else {
+            console.log('Email sent: ' + info.response);
+          }
+        });
 
 
-    // mail sent
+        // mail sent
 
-    const temp = new Name({
-      nameA: req.body.nA,
-      idA: req.body.username
-    });
-    temp.save();
+        const temp = new Name({
+          nameA: req.body.nA,
+          idA: req.body.username
+        });
+        temp.save();
 
-    console.log(req.body.username);
-    res.redirect("/Home1");
+        console.log(req.body.username);
+        res.redirect("/Home1");
+        // res.render('adminPage.ejs',{message:"A new admin is added successfully."});
+      });
+    }
   });
+
+
 });
 
 
@@ -467,7 +494,7 @@ app.post("/loginUser", function(req, res, next){
         passport.authenticate("local", function(err, person, info) {
 
             if (err) return next(err);
-            if (!person) return res.redirect('/loginUser');
+            if (!person) { return res.render('tmp.ejs',{message:"Your email ID or password is wrong."}); }
 
             req.logIn(person, function(err) {
                 if (err)  return next(err);
@@ -799,20 +826,13 @@ var e_id = "";
 app.post("/up", function(req, res){
 // console.log("ok, ye pehle thik h..");
 
-  // Appointment.find({emailC: req.body.ID}, function(err, found){
-  //   if(found.length === 0) { console.log("no"); } else {
-    // Appointment.updateOne({emailC: req.body.ID}, {nameC: req.body.name, diseaseC: req.body.ill, subC: req.body.sub}, function(err){
-    //   if (err) {
-    //     console.log(err);
-    //   } else {
-    //     // emailC: req.body.ID;
-    //     // console.log(req.body.ID);
-    //     // console.log(req.body.name);
-    //     console.log("ok, done");
-    //   }
-    // });
-  // }
-    // res.redirect("/up");
+  // Profiel.find({e_mail: e_id}, function(err, found){
+  //   if(found.length === 0) {
+  //
+  //   } else {
+  //
+  //   }
+  //   res.redirect("/up");
   // });
 
   if (req.body.okk === "up" ) {
@@ -841,7 +861,8 @@ app.post("/up", function(req, res){
 
   } else {
     Profile.find({e_mail: req.body.id}, function(err, found){
-      if (err) {
+      if (found.length === 0 ) {
+        res.render('update.ejs',{item: found, message: "There is no such user exixts."});
         console.log("no user");
         console.log(err);
       } else {
@@ -945,7 +966,8 @@ app.post('/rough', function(req, res, next) {
         if (!user) {
           // req.flash('error', 'No account with that email address exists.');
           console.log('No account with that email address exists.');
-          return res.redirect('/rough');
+          return res.render('roughW.ejs',{message:"There is no such type of email id exists."});
+          // return res.redirect('/rough');
         }
 
         user.resetPasswordToken = token;

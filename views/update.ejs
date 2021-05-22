@@ -25,6 +25,10 @@
         </div>
         <button type="submit" class="btn btn-primary mb-2" name="okk" value="show">Show</button>
       </form>
+
+      <% if(message) { %>
+        <p class="text-danger"><%= message %></p>
+      <% } %>
 <% } %>
       <br>
 
