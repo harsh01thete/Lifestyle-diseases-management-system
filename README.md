@@ -1,4 +1,4 @@
-# IIT2019115_SWE
+# Software Engineering Project
 
 Group Number 49
 Project name : Lifestyle diseases management system (HeaLife)
